@@ -18,11 +18,13 @@ import java.io.InputStream;
 public class PdfrenderActivity extends AppCompatActivity {
     private static final String STATE_CURRENT_PAGE_INDEX = "current_page_index";
     private static final String FILENAME = "testing.pdf";
+    private float currentZoomLevel = 12;
     private ParcelFileDescriptor FileDescriptor;
     private PdfRenderer PdfRenderer;
     private PdfRenderer.Page CurrentPage;
     private ImageView ImageView;
     private Button Previous,Next;
+    private ImageView zoomin,zoomout;
     private int PageIndex;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +33,8 @@ public class PdfrenderActivity extends AppCompatActivity {
         ImageView = (ImageView) findViewById(R.id.image);
         Previous = (Button) findViewById(R.id.previous);
         Next = (Button) findViewById(R.id.next);
+        zoomin=(ImageView)findViewById(R.id.zoomin);
+        zoomout=(ImageView)findViewById(R.id.zoomout);
         PageIndex = 0;
         if (null != savedInstanceState) {
             PageIndex = savedInstanceState.getInt(STATE_CURRENT_PAGE_INDEX, 0);
@@ -39,6 +43,7 @@ public class PdfrenderActivity extends AppCompatActivity {
             @Override
             public void onClick(View view)
             {
+//                currentZoomLevel = 12;
                 showPage(CurrentPage.getIndex() - 1);
             }
         });
@@ -46,9 +51,25 @@ public class PdfrenderActivity extends AppCompatActivity {
             @Override
             public void onClick(View view)
             {
+//                currentZoomLevel = 12;
                 showPage(CurrentPage.getIndex() + 1);
             }
         });
+
+        ImageView.setOnTouchListener(new Touch());
+//        zoomin.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                ++currentZoomLevel;
+//                showPage(CurrentPage.getIndex());
+//            }
+//        });
+//        zoomout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                --currentZoomLevel;
+//            }
+//        });
     }
 
 
@@ -137,7 +158,9 @@ public class PdfrenderActivity extends AppCompatActivity {
         // Use `openPage` to open a specific page in PDF.
         CurrentPage = PdfRenderer.openPage(index);
         // Important: the destination bitmap must be ARGB (not RGB).
-        Bitmap bitmap = Bitmap.createBitmap(CurrentPage.getWidth(), CurrentPage.getHeight(),
+        int newWidth = (int) (getResources().getDisplayMetrics().widthPixels * CurrentPage.getWidth() / 72 * currentZoomLevel / 40);
+        int newHeight = (int) (getResources().getDisplayMetrics().heightPixels * CurrentPage.getHeight() / 72 * currentZoomLevel / 64);
+        Bitmap bitmap = Bitmap.createBitmap(CurrentPage.getWidth(),CurrentPage.getHeight(),
                 Bitmap.Config.ARGB_8888);
         // Here, we render the page onto the Bitmap.
         // To render a portion of the page, use the second and third parameter. Pass nulls to get
