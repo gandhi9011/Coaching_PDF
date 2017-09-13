@@ -19,7 +19,6 @@
         android:layout_gravity="center"
         android:contentDescription="@null"/>
 
-
     <LinearLayout
         style="?android:attr/buttonBarStyle"
         android:layout_width="match_parent"

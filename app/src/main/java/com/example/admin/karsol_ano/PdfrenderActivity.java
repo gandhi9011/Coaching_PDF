@@ -7,6 +7,7 @@ import android.os.ParcelFileDescriptor;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -26,6 +27,7 @@ public class PdfrenderActivity extends AppCompatActivity {
     private Button Previous,Next;
     private ImageView zoomin,zoomout;
     private int PageIndex;
+    private HorizontalScrollView scrollView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,12 +35,15 @@ public class PdfrenderActivity extends AppCompatActivity {
         ImageView = (ImageView) findViewById(R.id.image);
         Previous = (Button) findViewById(R.id.previous);
         Next = (Button) findViewById(R.id.next);
-        zoomin=(ImageView)findViewById(R.id.zoomin);
-        zoomout=(ImageView)findViewById(R.id.zoomout);
+        scrollView=(HorizontalScrollView)findViewById(R.id.scrollView);
+//        zoomin=(ImageView)findViewById(R.id.zoomin);
+//        zoomout=(ImageView)findViewById(R.id.zoomout);
         PageIndex = 0;
         if (null != savedInstanceState) {
             PageIndex = savedInstanceState.getInt(STATE_CURRENT_PAGE_INDEX, 0);
         }
+
+
         Previous.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)

@@ -14,7 +14,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
-    Button b1,b2,b3,b4;
+    Button b1,b2,b3,b4,b5;
     private ProgressDialog pDialog;
 
     @Override
@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
         b2=(Button)findViewById(R.id.button2);
         b3=(Button)findViewById(R.id.button3);
         b4=(Button)findViewById(R.id.button4);
+        b5=(Button)findViewById(R.id.button5);
         pDialog = new ProgressDialog(this);
         pDialog.setMessage("Please wait...");
         pDialog.setCancelable(false);
@@ -70,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(pdfviewpage);
             }
         });
+
 
 
     }
