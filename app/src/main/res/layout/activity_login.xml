@@ -16,7 +16,7 @@
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="229dp"
-        app:srcCompat="@drawable/basic" />
+        app:srcCompat="@drawable/aarzu" />
 
     <ProgressBar
         android:id="@+id/login_progress"

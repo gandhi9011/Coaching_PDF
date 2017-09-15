@@ -15,7 +15,7 @@
         android:id="@+id/imageView"
         android:layout_width="284dp"
         android:layout_height="229dp"
-        app:srcCompat="@drawable/basic" />
+        app:srcCompat="@drawable/aarzu" />
 
     <LinearLayout
         android:id="@+id/basic"
