@@ -11,13 +11,13 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="match_parent"
-        android:layout_height="230dp"
-        app:srcCompat="@drawable/partnership"
-        android:layout_weight="0.56" />
+        android:layout_width="384dp"
+        android:layout_height="229dp"
+        android:layout_weight="0.04"
+        app:srcCompat="@drawable/aarzu" />
 
     <LinearLayout
-        android:id="@+id/partnership1"
+        android:id="@+id/english"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
@@ -29,18 +29,18 @@
             android:id="@+id/imageView1"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            app:srcCompat="@drawable/partnership1" />
+            app:srcCompat="@drawable/eng" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/partnershiptv1"
+            android:id="@+id/engtv1"
             android:layout_marginLeft="30dp"
             android:layout_marginTop="10dp"
             android:layout_weight="0.77"
-            android:textColor="@color/red_icon_color"
+            android:textColor="@android:color/holo_green_dark"
             android:textSize="24sp"
-            tools:text="PARTNERSHIP-1" />
+            tools:text="ENGLISH" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -49,23 +49,24 @@
         android:orientation="horizontal"
         android:weightSum="1"
         android:background="?attr/colorControlHighlight"
-        android:id="@+id/partnership2">
+        android:id="@+id/gujrati">
 
         <ImageView
             android:id="@+id/imageView2"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            app:srcCompat="@drawable/partnership2" />
+            app:srcCompat="@drawable/guj" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/partnershiptv2"
+            android:id="@+id/gujtv2"
             android:layout_marginLeft="30dp"
             android:layout_marginTop="10dp"
             android:layout_weight="0.77"
             android:textColor="@color/yellow_icon_color"
             android:textSize="24sp"
-            tools:text="PARTNERSHIP-2" />
+            tools:text="GUJRATI" />
     </LinearLayout>
+
 </LinearLayout>

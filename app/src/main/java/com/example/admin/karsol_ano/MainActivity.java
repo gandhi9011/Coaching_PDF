@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view)
             {
-                new DownloadFile().execute("https://www.dropbox.com/s/awy35keypuwxwtx/testing%20pdf.pdf?dl=1", "testing.pdf");
+                new DownloadFile().execute("https://www.dropbox.com/s/oi4itxg10gm62zt/Basic%201%20Full%20Theory%20pdf.pdf?dl=1", "basic1.pdf");
 
             }
         });
@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
         protected Void doInBackground(String... strings) {
             String fileUrl = strings[0];   // f
             String fileName = strings[1];  //
-            String extStorageDirectory = getCacheDir().toString();
+            String extStorageDirectory = getExternalCacheDir().toString();
             File folder = new File(extStorageDirectory, "testthreepdf");
             folder.mkdir();
             File pdfFile = new File(folder, fileName);

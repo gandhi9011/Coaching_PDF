@@ -1,40 +1,50 @@
 package com.example.admin.karsol_ano;
 
 import android.graphics.Bitmap;
+import android.graphics.Matrix;
+import android.graphics.RectF;
 import android.graphics.pdf.PdfRenderer;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.ParcelFileDescriptor;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 
 public class PdfrenderActivity extends AppCompatActivity {
     private static final String STATE_CURRENT_PAGE_INDEX = "current_page_index";
-    private static final String FILENAME = "testing.pdf";
+    private static final String FILENAME = "basic1.pdf";
     private float currentZoomLevel = 12;
     private ParcelFileDescriptor FileDescriptor;
     private PdfRenderer PdfRenderer;
     private PdfRenderer.Page CurrentPage;
     private ImageView ImageView;
+    private LinearLayout image_layout;
     private Button Previous,Next;
     private ImageView zoomin,zoomout;
     private int PageIndex;
     private HorizontalScrollView scrollView;
+    Matrix matrix=new Matrix();
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pdfrender);
         ImageView = (ImageView) findViewById(R.id.image);
         Previous = (Button) findViewById(R.id.previous);
         Next = (Button) findViewById(R.id.next);
+        image_layout=(LinearLayout)findViewById(R.id.imageviewlayout);
+        Bundle b=getIntent().getExtras();
+        final String pdfname=b.getString("Pdfname");
+        Toast.makeText(this,pdfname,Toast.LENGTH_LONG).show();
         scrollView=(HorizontalScrollView)findViewById(R.id.scrollView);
 //        zoomin=(ImageView)findViewById(R.id.zoomin);
 //        zoomout=(ImageView)findViewById(R.id.zoomout);
@@ -60,21 +70,13 @@ public class PdfrenderActivity extends AppCompatActivity {
                 showPage(CurrentPage.getIndex() + 1);
             }
         });
-
+        RectF imageRectF = new RectF(0, 0, image_layout.getWidth(), image_layout.getHeight());
+        RectF viewRectF = new RectF(0, 0, ImageView.getWidth(), ImageView.getHeight());
+        matrix.setRectToRect(imageRectF, viewRectF, Matrix.ScaleToFit.CENTER);
+        ImageView.setImageMatrix(matrix);
         ImageView.setOnTouchListener(new Touch());
-//        zoomin.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                ++currentZoomLevel;
-//                showPage(CurrentPage.getIndex());
-//            }
-//        });
-//        zoomout.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                --currentZoomLevel;
-//            }
-//        });
+
+
     }
 
 
@@ -113,19 +115,22 @@ public class PdfrenderActivity extends AppCompatActivity {
      */
     private void openRenderer() throws IOException {
         // In this sample, we read a PDF from the assets directory.
-        File file = new File(getCacheDir(), "/testthreepdf/"+FILENAME);
+        File file = new File(getExternalCacheDir(), "/aarzu1/"+FILENAME);
         if (!file.exists()) {
+
+            new DownloadFile().execute("https://www.dropbox.com/s/oi4itxg10gm62zt/Basic%201%20Full%20Theory%20pdf.pdf?dl=1", "basic1.pdf");
+
             // Since PdfRenderer cannot handle the compressed asset file directly, we copy it into
             // the cache directory.
-            InputStream asset = getAssets().open(FILENAME);
-            FileOutputStream output = new FileOutputStream(file);
-            final byte[] buffer = new byte[1024];
-            int size;
-            while ((size = asset.read(buffer)) != -1) {
-                output.write(buffer, 0, size);
-            }
-            asset.close();
-            output.close();
+//            InputStream asset = getAssets().open(FILENAME);
+//            FileOutputStream output = new FileOutputStream(file);
+//            final byte[] buffer = new byte[1024];
+//            int size;
+//            while ((size = asset.read(buffer)) != -1) {
+//                output.write(buffer, 0, size);
+//            }
+//            asset.close();
+//            output.close();
         }
         FileDescriptor = ParcelFileDescriptor.open(file, ParcelFileDescriptor.MODE_READ_ONLY);
         // This is the PdfRenderer we use to render the PDF.
@@ -196,6 +201,34 @@ public class PdfrenderActivity extends AppCompatActivity {
         return PdfRenderer.getPageCount();
     }
 
+    private class DownloadFile extends AsyncTask<String, Void, Void> {
 
+        @Override
+        protected Void doInBackground(String... strings) {
+            String fileUrl = strings[0];   // f
+            String fileName = strings[1];  //
+            String extStorageDirectory = getExternalCacheDir().toString();
+            File folder = new File(extStorageDirectory, "aarzu1");
+            folder.mkdir();
+            File pdfFile = new File(folder, fileName);
 
-}
+            try {
+                pdfFile.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            FileDownloader.downloadFile(fileUrl, pdfFile);
+            return null;
+        }
+
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+
+            Toast.makeText(getApplicationContext(), "Download PDf successfully", Toast.LENGTH_SHORT).show();
+
+            Log.d("Download complete", "----------");
+        }
+
+    }
+
+    }

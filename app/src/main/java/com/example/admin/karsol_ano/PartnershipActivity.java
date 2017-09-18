@@ -1,5 +1,6 @@
 package com.example.admin.karsol_ano;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -21,7 +22,9 @@ public class PartnershipActivity extends AppCompatActivity {
             @Override
             public void onClick(View view)
             {
-
+                Intent partnership_i=new Intent(PartnershipActivity.this,EnglishGujratiActivity.class);
+                partnership_i.putExtra("BtnValue","partnership1");
+                startActivity(partnership_i);
             }
         });
 
@@ -29,7 +32,9 @@ public class PartnershipActivity extends AppCompatActivity {
             @Override
             public void onClick(View view)
             {
-
+                Intent partnership_i=new Intent(PartnershipActivity.this,EnglishGujratiActivity.class);
+                partnership_i.putExtra("BtnValue","partnership2");
+                startActivity(partnership_i);
             }
         });
 

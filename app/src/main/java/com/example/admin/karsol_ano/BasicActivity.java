@@ -1,5 +1,6 @@
 package com.example.admin.karsol_ano;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -23,6 +24,9 @@ public class BasicActivity extends AppCompatActivity {
             @Override
             public void onClick(View view)
             {
+                Intent basic_i=new Intent(BasicActivity.this,EnglishGujratiActivity.class);
+                basic_i.putExtra("BtnValue","basic1");
+                startActivity(basic_i);
 
             }
         });
@@ -31,7 +35,9 @@ public class BasicActivity extends AppCompatActivity {
             @Override
             public void onClick(View view)
             {
-
+                Intent basic_i=new Intent(BasicActivity.this,EnglishGujratiActivity.class);
+                basic_i.putExtra("BtnValue","basic2");
+                startActivity(basic_i);
             }
         });
 
@@ -40,7 +46,9 @@ public class BasicActivity extends AppCompatActivity {
             @Override
             public void onClick(View view)
             {
-
+                Intent basic_i=new Intent(BasicActivity.this,EnglishGujratiActivity.class);
+                basic_i.putExtra("BtnValue","basic3");
+                startActivity(basic_i);
             }
         });
 
