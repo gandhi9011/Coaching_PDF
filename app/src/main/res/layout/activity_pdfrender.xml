@@ -45,21 +45,6 @@
             android:layout_weight="1"
             android:text="Next" />
 
-        <ImageButton
-            android:id="@+id/zoomout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="0dp"
-            android:padding="16dp"
-            android:src="@drawable/zoom_out" />
-
-        <ImageButton
-            android:id="@+id/zoomin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="0dp"
-            android:padding="16dp"
-            android:src="@drawable/zoom_in" />
     </LinearLayout>
 
 </LinearLayout>

@@ -40,7 +40,7 @@
             android:layout_weight="0.77"
             android:textColor="@color/red_icon_color"
             android:textSize="24sp"
-            tools:text="PARTNERSHIP-1" />
+            android:text="PARTNERSHIP-1" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -66,6 +66,6 @@
             android:layout_weight="0.77"
             android:textColor="@color/yellow_icon_color"
             android:textSize="24sp"
-            tools:text="PARTNERSHIP-2" />
+            android:text="PARTNERSHIP-2" />
     </LinearLayout>
 </LinearLayout>

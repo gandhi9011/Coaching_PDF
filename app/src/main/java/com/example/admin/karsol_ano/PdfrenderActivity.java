@@ -1,5 +1,8 @@
 package com.example.admin.karsol_ano;
 
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.graphics.RectF;
@@ -7,32 +10,38 @@ import android.graphics.pdf.PdfRenderer;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.ParcelFileDescriptor;
+import android.os.PowerManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URL;
+import java.net.URLConnection;
 
 public class PdfrenderActivity extends AppCompatActivity {
     private static final String STATE_CURRENT_PAGE_INDEX = "current_page_index";
-    private static final String FILENAME = "basic1.pdf";
     private float currentZoomLevel = 12;
+    private static String  PDFFILENAME;
+    private static PowerManager.WakeLock mWakeLock;
     private ParcelFileDescriptor FileDescriptor;
     private PdfRenderer PdfRenderer;
     private PdfRenderer.Page CurrentPage;
     private ImageView ImageView;
     private LinearLayout image_layout;
     private Button Previous,Next;
-    private ImageView zoomin,zoomout;
     private int PageIndex;
-    private HorizontalScrollView scrollView;
     Matrix matrix=new Matrix();
+    ProgressDialog mProgressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -42,12 +51,17 @@ public class PdfrenderActivity extends AppCompatActivity {
         Previous = (Button) findViewById(R.id.previous);
         Next = (Button) findViewById(R.id.next);
         image_layout=(LinearLayout)findViewById(R.id.imageviewlayout);
+        ProgressDialog mProgressDialog;
+
+// instantiate it within the onCreate method
+        mProgressDialog = new ProgressDialog(PdfrenderActivity.this);
+        mProgressDialog.setMessage("A message");
+        mProgressDialog.setIndeterminate(true);
+        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        mProgressDialog.setCancelable(true);
         Bundle b=getIntent().getExtras();
-        final String pdfname=b.getString("Pdfname");
-        Toast.makeText(this,pdfname,Toast.LENGTH_LONG).show();
-        scrollView=(HorizontalScrollView)findViewById(R.id.scrollView);
-//        zoomin=(ImageView)findViewById(R.id.zoomin);
-//        zoomout=(ImageView)findViewById(R.id.zoomout);
+        PDFFILENAME=b.getString("Pdfname");
+        Toast.makeText(this,PDFFILENAME,Toast.LENGTH_LONG).show();
         PageIndex = 0;
         if (null != savedInstanceState) {
             PageIndex = savedInstanceState.getInt(STATE_CURRENT_PAGE_INDEX, 0);
@@ -58,15 +72,13 @@ public class PdfrenderActivity extends AppCompatActivity {
             @Override
             public void onClick(View view)
             {
-//                currentZoomLevel = 12;
-                showPage(CurrentPage.getIndex() - 1);
+              showPage(CurrentPage.getIndex() - 1);
             }
         });
         Next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)
             {
-//                currentZoomLevel = 12;
                 showPage(CurrentPage.getIndex() + 1);
             }
         });
@@ -75,7 +87,12 @@ public class PdfrenderActivity extends AppCompatActivity {
         matrix.setRectToRect(imageRectF, viewRectF, Matrix.ScaleToFit.CENTER);
         ImageView.setImageMatrix(matrix);
         ImageView.setOnTouchListener(new Touch());
-
+        mProgressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                //downloadTask.cancel(true);
+            }
+        });
 
     }
 
@@ -88,7 +105,7 @@ public class PdfrenderActivity extends AppCompatActivity {
             showPage(PageIndex);
         } catch (IOException e) {
             e.printStackTrace();
-            Toast.makeText(this, "Error! " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Downloading" , Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -115,22 +132,12 @@ public class PdfrenderActivity extends AppCompatActivity {
      */
     private void openRenderer() throws IOException {
         // In this sample, we read a PDF from the assets directory.
-        File file = new File(getExternalCacheDir(), "/aarzu1/"+FILENAME);
+        File file = new File(getExternalCacheDir(), "/aarzu1/"+PDFFILENAME);
         if (!file.exists()) {
 
-            new DownloadFile().execute("https://www.dropbox.com/s/oi4itxg10gm62zt/Basic%201%20Full%20Theory%20pdf.pdf?dl=1", "basic1.pdf");
+            new DownloadFile().execute("https://www.dropbox.com/s/oi4itxg10gm62zt/Basic%201%20Full%20Theory%20pdf.pdf?dl=1");
 
-            // Since PdfRenderer cannot handle the compressed asset file directly, we copy it into
-            // the cache directory.
-//            InputStream asset = getAssets().open(FILENAME);
-//            FileOutputStream output = new FileOutputStream(file);
-//            final byte[] buffer = new byte[1024];
-//            int size;
-//            while ((size = asset.read(buffer)) != -1) {
-//                output.write(buffer, 0, size);
-//            }
-//            asset.close();
-//            output.close();
+
         }
         FileDescriptor = ParcelFileDescriptor.open(file, ParcelFileDescriptor.MODE_READ_ONLY);
         // This is the PdfRenderer we use to render the PDF.
@@ -148,15 +155,12 @@ public class PdfrenderActivity extends AppCompatActivity {
         if (null != CurrentPage) {
             CurrentPage.close();
         }
-        PdfRenderer.close();
         FileDescriptor.close();
+        PdfRenderer.close();
+
     }
 
-    /**
-     * Shows the specified page of PDF to the screen.
-     *
-     * @param index The page index.
-     */
+
     private void showPage(int index) {
         if (PdfRenderer.getPageCount() <= index) {
             return;
@@ -168,8 +172,6 @@ public class PdfrenderActivity extends AppCompatActivity {
         // Use `openPage` to open a specific page in PDF.
         CurrentPage = PdfRenderer.openPage(index);
         // Important: the destination bitmap must be ARGB (not RGB).
-        int newWidth = (int) (getResources().getDisplayMetrics().widthPixels * CurrentPage.getWidth() / 72 * currentZoomLevel / 40);
-        int newHeight = (int) (getResources().getDisplayMetrics().heightPixels * CurrentPage.getHeight() / 72 * currentZoomLevel / 64);
         Bitmap bitmap = Bitmap.createBitmap(CurrentPage.getWidth(),CurrentPage.getHeight(),
                 Bitmap.Config.ARGB_8888);
         // Here, we render the page onto the Bitmap.
@@ -201,34 +203,98 @@ public class PdfrenderActivity extends AppCompatActivity {
         return PdfRenderer.getPageCount();
     }
 
-    private class DownloadFile extends AsyncTask<String, Void, Void> {
+    private class DownloadFile extends AsyncTask<String, Integer, String> {
 
         @Override
-        protected Void doInBackground(String... strings) {
-            String fileUrl = strings[0];   // f
-            String fileName = strings[1];  //
-            String extStorageDirectory = getExternalCacheDir().toString();
-            File folder = new File(extStorageDirectory, "aarzu1");
-            folder.mkdir();
-            File pdfFile = new File(folder, fileName);
+        protected void onPreExecute() {
+            super.onPreExecute();
+            // Create progress dialog
+            mProgressDialog = new ProgressDialog(PdfrenderActivity.this);
+            // Set your progress dialog Title
+            mProgressDialog.setTitle(PDFFILENAME);
+            // Set your progress dialog Message
+            mProgressDialog.setMessage("Downloading, Please Wait!");
+            mProgressDialog.setIndeterminate(false);
+            mProgressDialog.setMax(100);
+            mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+            // Show progress dialog
+            PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+            mWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,
+                    getClass().getName());
+            mWakeLock.acquire();
+            mProgressDialog.show();
+        }
 
+        @Override
+        protected String doInBackground(String... Url) {
             try {
-                pdfFile.createNewFile();
-            } catch (IOException e) {
+                URL url = new URL(Url[0]);
+                URLConnection connection = url.openConnection();
+                connection.connect();
+
+                // Detect the file lenghth
+                int fileLength = connection.getContentLength();
+
+                // Locate storage location
+                String extStorageDirectory = getExternalCacheDir().toString();
+                File folder = new File(extStorageDirectory, "aarzu1");
+                folder.mkdir();
+                File pdfFile = new File(folder, PDFFILENAME);
+
+                // Download the file
+                InputStream input = new BufferedInputStream(url.openStream());
+
+                // Save the downloaded file
+                OutputStream output = new FileOutputStream(pdfFile);
+
+                byte data[] = new byte[1024];
+                long total = 0;
+                int count;
+                while ((count = input.read(data)) != -1) {
+                    total += count;
+                    // Publish the progress
+                    publishProgress((int) (total * 100 / fileLength));
+                    output.write(data, 0, count);
+                }
+
+                // Close connection
+                output.flush();
+                output.close();
+                input.close();
+            } catch (Exception e) {
+                // Error Log
+                Log.e("Error", e.getMessage());
                 e.printStackTrace();
             }
-            FileDownloader.downloadFile(fileUrl, pdfFile);
             return null;
         }
 
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
+        @Override
+        protected void onProgressUpdate(Integer... progress) {
+            super.onProgressUpdate(progress);
+            // Update the progress dialog
+            mProgressDialog.setProgress(progress[0]);
+            // Dismiss the progress dialog
+            //mProgressDialog.dismiss();
 
-            Toast.makeText(getApplicationContext(), "Download PDf successfully", Toast.LENGTH_SHORT).show();
-
-            Log.d("Download complete", "----------");
         }
 
-    }
+        protected void onPostExecute(String Result)
+        {
+            mWakeLock.release();
+            mProgressDialog.dismiss();
+            if (Result!=null)
+            {
+                onStop();
+            }
+            else
+            {
+                onStart();
+            }
+        }
+
 
     }
+}
+
+
