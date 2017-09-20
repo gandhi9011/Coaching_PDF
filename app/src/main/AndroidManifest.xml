@@ -40,6 +40,7 @@
         <activity android:name=".CompanyActivity" />
         <activity android:name=".PartnershipActivity" />
         <activity android:name=".EnglishGujratiActivity" />
+        <activity android:name=".Developed_Activity"></activity>
     </application>
 
 </manifest>

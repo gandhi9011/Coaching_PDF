@@ -4,9 +4,10 @@
     <color name="colorPrimaryDark">#0119b6</color>
     <color name="colorAccent">#FF4081</color>
     <color name="red_icon_color">#cabf00</color>
-    <color name="yellow_icon_color">#7806f1</color>
+    <color name="yellow_icon_color">#ff695a</color>
     <color name="green_icon_color">#92c89f</color>
     <color name="blue_icon_color">#809fc5</color>
+    <color name="appbar">#ff695a</color>
 
 
 </resources>

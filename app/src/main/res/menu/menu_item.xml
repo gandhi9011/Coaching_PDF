@@ -1,0 +1,33 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="activity.MainActivity">
+
+    <item
+        android:id="@+id/action_home"
+        android:title="@string/action_home"
+        android:orderInCategory="100"
+        android:icon="@drawable/home"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_aboutus"
+        android:title="@string/action_aboutus"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_contactus"
+        android:title="@string/action_contactus"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_developer"
+        android:title="@string/action_developer"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_signout"
+        android:title="@string/action_sign_out"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+
+</menu>

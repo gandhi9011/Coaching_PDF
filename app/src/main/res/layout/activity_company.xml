@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
-        android:background="?attr/colorControlHighlight"
+        android:background="#ffffff"
         android:orientation="horizontal"
         android:weightSum="1">
 
@@ -37,8 +37,9 @@
             android:layout_marginLeft="30dp"
             android:layout_marginTop="10dp"
             android:layout_weight="0.77"
-            android:textColor="@color/red_icon_color"
+            android:textColor="@color/appbar"
             android:textSize="24sp"
+            android:textStyle="bold|italic"
             android:text="COMPANY-1" />
     </LinearLayout>
     <LinearLayout
@@ -47,7 +48,7 @@
         android:layout_marginTop="25dp"
         android:orientation="horizontal"
         android:weightSum="1"
-        android:background="?attr/colorControlHighlight"
+        android:background="#ffffff"
         android:id="@+id/company2">
 
         <ImageView
@@ -63,8 +64,9 @@
             android:layout_marginLeft="30dp"
             android:layout_marginTop="10dp"
             android:layout_weight="0.77"
-            android:textColor="@color/yellow_icon_color"
+            android:textColor="@color/appbar"
             android:textSize="24sp"
+            android:textStyle="bold|italic"
             android:text="COMPANY-2" />
     </LinearLayout>
 </LinearLayout>
