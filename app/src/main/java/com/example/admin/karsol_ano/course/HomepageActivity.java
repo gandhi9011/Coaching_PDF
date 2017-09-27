@@ -1,12 +1,12 @@
-package com.example.admin.karsol_ano;
+package com.example.admin.karsol_ano.course;
 
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -16,9 +16,18 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.admin.karsol_ano.LoginModule.LoginActivity;
+import com.example.admin.karsol_ano.MenuItems.AboutUsActivity;
+import com.example.admin.karsol_ano.MenuItems.ChangePasswordActivity;
+import com.example.admin.karsol_ano.MenuItems.ContactUsActivity;
+import com.example.admin.karsol_ano.MenuItems.Developed_Activity;
+import com.example.admin.karsol_ano.MenuItems.PriceActivity;
+import com.example.admin.karsol_ano.R;
+
 public class HomepageActivity extends AppCompatActivity {
 LinearLayout basic,company,partnership;
 TextView  tvbasic,tvcompany,tvpartnership;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,19 +88,22 @@ TextView  tvbasic,tvcompany,tvpartnership;
         // Take appropriate action for each action item click
         switch (item.getItemId()) {
             case R.id.action_aboutus:
-                // search action
+                startActivity(new Intent(this, AboutUsActivity.class));
                 return true;
             case R.id.action_contactus:
-                // location found
-
+                startActivity(new Intent(this, ContactUsActivity.class));
                 return true;
             case R.id.action_developer:
                 startActivity(new Intent(this, Developed_Activity.class));
-
-
+                return true;
+            case R.id.action_pricing:
+                startActivity(new Intent(this, PriceActivity.class));
+                return true;
             case R.id.action_signout:
-                // location found
-
+                startActivity(new Intent(this, LoginActivity.class));
+                return true;
+            case R.id.action_changepass:
+                startActivity(new Intent(this, ChangePasswordActivity.class));
                 return true;
 
 

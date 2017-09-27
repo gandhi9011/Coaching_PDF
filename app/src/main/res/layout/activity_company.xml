@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    tools:context="com.example.admin.karsol_ano.LoginActivity"
+    tools:context="com.example.admin.karsol_ano.LoginModule.LoginActivity"
     android:weightSum="1">
 
     <ImageView

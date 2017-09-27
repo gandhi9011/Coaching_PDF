@@ -1,12 +1,12 @@
-package com.example.admin.karsol_ano;
+package com.example.admin.karsol_ano.course;
 
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -16,17 +16,21 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.io.File;
+import com.example.admin.karsol_ano.LoginModule.LoginActivity;
+import com.example.admin.karsol_ano.MenuItems.AboutUsActivity;
+import com.example.admin.karsol_ano.MenuItems.ChangePasswordActivity;
+import com.example.admin.karsol_ano.MenuItems.ContactUsActivity;
+import com.example.admin.karsol_ano.MenuItems.Developed_Activity;
+import com.example.admin.karsol_ano.MenuItems.PriceActivity;
+import com.example.admin.karsol_ano.R;
 
-public class EnglishGujratiActivity extends AppCompatActivity {
-    TextView tv1,tv2;
-    LinearLayout english,gujrati;
-    private static final String FILENAME = "basic1.pdf";
-
+public class CompanyActivity extends AppCompatActivity {
+    LinearLayout company1,company2;
+    TextView tvcompany1,tvcompany2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_english_gujrati);
+        setContentView(R.layout.activity_company);
         if (android.os.Build.VERSION.SDK_INT >= 21) {
             Window statusBar = getWindow();
             statusBar.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -34,42 +38,32 @@ public class EnglishGujratiActivity extends AppCompatActivity {
             statusBar.setStatusBarColor(ContextCompat.getColor(this, R.color.appbar));
         }
         final ActionBar actionar = getSupportActionBar();
-        actionar.setTitle("LANGUAGE");
+        actionar.setTitle("COMPANY");
         actionar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#DB1400")));
-        tv1=(TextView)findViewById(R.id.engtv1);
-        tv2=(TextView)findViewById(R.id.gujtv2);
-        english=(LinearLayout)findViewById(R.id.english);
-        gujrati=(LinearLayout)findViewById(R.id.gujrati);
-
-        Bundle b=getIntent().getExtras();
-        final String pdfname=b.getString("BtnValue");
-        //Toast.makeText(this,pdfname,Toast.LENGTH_LONG).show();
-
-
-        english.setOnClickListener(new View.OnClickListener() {
+        company1=(LinearLayout)findViewById(R.id.company1);
+        company2=(LinearLayout)findViewById(R.id.company2);
+        tvcompany1=(TextView)findViewById(R.id.companytv1);
+        tvcompany2=(TextView)findViewById(R.id.companytv2);
+        company1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)
             {
-                Intent pdfview=new Intent(EnglishGujratiActivity.this,PdfrenderActivity.class);
-                File file = new File(getExternalCacheDir(), "/aarzu1/"+FILENAME);
-                pdfview.putExtra("Pdfname",pdfname+"English");
-                startActivity(pdfview);
-
+                Intent company_i=new Intent(CompanyActivity.this,EnglishGujratiActivity.class);
+                company_i.putExtra("BtnValue","COMPANY1");
+                startActivity(company_i);
             }
         });
 
-
-
-        gujrati.setOnClickListener(new View.OnClickListener() {
+        company2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)
             {
-                Intent pdfview=new Intent(EnglishGujratiActivity.this,PdfrenderActivity.class);
-                pdfview.putExtra("Pdfname",pdfname+"Gujrati");
-                startActivity(pdfview);
-
+                Intent company_i=new Intent(CompanyActivity.this,EnglishGujratiActivity.class);
+                company_i.putExtra("BtnValue","COMPANY2");
+                startActivity(company_i);
             }
         });
+
 
     }
 
@@ -85,21 +79,24 @@ public class EnglishGujratiActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_home:
                 startActivity(new Intent(this, HomepageActivity.class));
-
+                return true;
             case R.id.action_aboutus:
-                // search action
+                startActivity(new Intent(this, AboutUsActivity.class));
                 return true;
             case R.id.action_contactus:
-                // location found
-
+                startActivity(new Intent(this, ContactUsActivity.class));
                 return true;
             case R.id.action_developer:
                 startActivity(new Intent(this, Developed_Activity.class));
-
-
+                return true;
+            case R.id.action_pricing:
+                startActivity(new Intent(this, PriceActivity.class));
+                return true;
             case R.id.action_signout:
-                // location found
-
+                startActivity(new Intent(this, LoginActivity.class));
+                return true;
+            case R.id.action_changepass:
+                startActivity(new Intent(this, ChangePasswordActivity.class));
                 return true;
 
 
@@ -107,6 +104,4 @@ public class EnglishGujratiActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-
-
 }

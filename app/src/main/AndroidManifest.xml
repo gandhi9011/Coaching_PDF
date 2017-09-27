@@ -27,7 +27,7 @@
         <activity android:name=".PdfrenderActivity" />
         <activity android:name=".PdfWebview" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".LoginModule.LoginActivity"
             android:label="@string/title_activity_login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -35,12 +35,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".HomepageActivity" />
-        <activity android:name=".BasicActivity" />
-        <activity android:name=".CompanyActivity" />
-        <activity android:name=".PartnershipActivity" />
-        <activity android:name=".EnglishGujratiActivity" />
-        <activity android:name=".Developed_Activity"></activity>
+        <activity android:name=".course.HomepageActivity" />
+        <activity android:name=".course.BasicActivity" />
+        <activity android:name=".course.CompanyActivity" />
+        <activity android:name=".course.PartnershipActivity" />
+        <activity android:name=".course.EnglishGujratiActivity" />
+        <activity android:name=".MenuItems.Developed_Activity" />
+        <activity android:name=".MenuItems.ContactUsActivity" />
+        <activity android:name=".MenuItems.AboutUsActivity" />
+        <activity android:name=".MenuItems.PriceActivity" />
+        <activity android:name=".MenuItems.ChangePasswordActivity"></activity>
     </application>
 
 </manifest>

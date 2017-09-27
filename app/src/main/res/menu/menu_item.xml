@@ -25,6 +25,16 @@
         android:orderInCategory="100"
         app:showAsAction="never" />
     <item
+        android:id="@+id/action_changepass"
+        android:title="@string/action_change_password"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_pricing"
+        android:title="Pricing"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+    <item
         android:id="@+id/action_signout"
         android:title="@string/action_sign_out"
         android:orderInCategory="100"

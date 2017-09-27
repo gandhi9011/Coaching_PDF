@@ -4,16 +4,22 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.RectF;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.pdf.PdfRenderer;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.ParcelFileDescriptor;
 import android.os.PowerManager;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -32,6 +38,7 @@ public class PdfrenderActivity extends AppCompatActivity {
     private static final String STATE_CURRENT_PAGE_INDEX = "current_page_index";
     private float currentZoomLevel = 12;
     private static String  PDFFILENAME;
+    private static String  URL_LINK;
     private static PowerManager.WakeLock mWakeLock;
     private ParcelFileDescriptor FileDescriptor;
     private PdfRenderer PdfRenderer;
@@ -47,6 +54,15 @@ public class PdfrenderActivity extends AppCompatActivity {
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pdfrender);
+        if (android.os.Build.VERSION.SDK_INT >= 21) {
+            Window statusBar = getWindow();
+            statusBar.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            statusBar.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            statusBar.setStatusBarColor(ContextCompat.getColor(this, R.color.appbar));
+        }
+        final ActionBar actionar = getSupportActionBar();
+
+        actionar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#DB1400")));
         ImageView = (ImageView) findViewById(R.id.image);
         Previous = (Button) findViewById(R.id.previous);
         Next = (Button) findViewById(R.id.next);
@@ -60,7 +76,10 @@ public class PdfrenderActivity extends AppCompatActivity {
         mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
         mProgressDialog.setCancelable(true);
         Bundle b=getIntent().getExtras();
-        PDFFILENAME=b.getString("Pdfname");
+        PDFFILENAME=b.getString("CoursePart")+b.getString("Language");
+        actionar.setTitle(PDFFILENAME);
+        URL_LINK=b.getString("Link");
+
         Toast.makeText(this,PDFFILENAME,Toast.LENGTH_LONG).show();
         PageIndex = 0;
         if (null != savedInstanceState) {
@@ -135,7 +154,7 @@ public class PdfrenderActivity extends AppCompatActivity {
         File file = new File(getExternalCacheDir(), "/aarzu1/"+PDFFILENAME);
         if (!file.exists()) {
 
-            new DownloadFile().execute("https://www.dropbox.com/s/oi4itxg10gm62zt/Basic%201%20Full%20Theory%20pdf.pdf?dl=1");
+            new DownloadFile().execute(URL_LINK);
 
 
         }

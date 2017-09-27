@@ -1,22 +1,22 @@
-package com.example.admin.karsol_ano;
+package com.example.admin.karsol_ano.MenuItems;
 
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
-import android.webkit.WebView;
 
-public class Developed_Activity extends AppCompatActivity {
+import com.example.admin.karsol_ano.R;
 
-    WebView webView;
+public class ContactUsActivity extends AppCompatActivity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_developed_);
+        setContentView(R.layout.activity_contact_us);
         if (android.os.Build.VERSION.SDK_INT >= 21) {
             Window statusBar = getWindow();
             statusBar.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -24,10 +24,7 @@ public class Developed_Activity extends AppCompatActivity {
             statusBar.setStatusBarColor(ContextCompat.getColor(this, R.color.appbar));
         }
         final ActionBar actionar = getSupportActionBar();
-        actionar.setTitle("Developed By");
+        actionar.setTitle("Contact Us");
         actionar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#DB1400")));
-        webView = (WebView) findViewById(R.id.webView1);
-        webView.getSettings().setJavaScriptEnabled(true);
-        webView.loadUrl("http://www.archivessoftdesign.in");
     }
 }
