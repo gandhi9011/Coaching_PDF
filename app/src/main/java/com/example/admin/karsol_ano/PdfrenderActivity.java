@@ -3,6 +3,7 @@ package com.example.admin.karsol_ano;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Matrix;
@@ -11,6 +12,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.pdf.PdfRenderer;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.ParcelFileDescriptor;
 import android.os.PowerManager;
 import android.support.v4.content.ContextCompat;
@@ -25,14 +27,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLConnection;
 
 public class PdfrenderActivity extends AppCompatActivity {
     private static final String STATE_CURRENT_PAGE_INDEX = "current_page_index";
@@ -76,11 +77,12 @@ public class PdfrenderActivity extends AppCompatActivity {
         mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
         mProgressDialog.setCancelable(true);
         Bundle b=getIntent().getExtras();
-        PDFFILENAME=b.getString("CoursePart")+b.getString("Language");
+        SharedPreferences sharedpreferences = getSharedPreferences("PDFStructure", Context.MODE_PRIVATE);
+        PDFFILENAME=sharedpreferences.getString("CoursePart",null)+sharedpreferences.getString("Language",null);
         actionar.setTitle(PDFFILENAME);
         URL_LINK=b.getString("Link");
 
-        Toast.makeText(this,PDFFILENAME,Toast.LENGTH_LONG).show();
+        Toast.makeText(this,PDFFILENAME+"....file name",Toast.LENGTH_LONG).show();
         PageIndex = 0;
         if (null != savedInstanceState) {
             PageIndex = savedInstanceState.getInt(STATE_CURRENT_PAGE_INDEX, 0);
@@ -91,7 +93,7 @@ public class PdfrenderActivity extends AppCompatActivity {
             @Override
             public void onClick(View view)
             {
-              showPage(CurrentPage.getIndex() - 1);
+                showPage(CurrentPage.getIndex() - 1);
             }
         });
         Next.setOnClickListener(new View.OnClickListener() {
@@ -150,11 +152,11 @@ public class PdfrenderActivity extends AppCompatActivity {
      * Sets up a {@link android.graphics.pdf.PdfRenderer} and related resources.
      */
     private void openRenderer() throws IOException {
-        // In this sample, we read a PDF from the assets directory.
-        File file = new File(getExternalCacheDir(), "/aarzu1/"+PDFFILENAME);
+
+        File file = new File(Environment.getExternalStorageDirectory(),"/ABC/"+"xyz.pdf");
         if (!file.exists()) {
 
-            new DownloadFile().execute(URL_LINK);
+            new DownloadFile().execute("https://www.dropbox.com/s/xfy23tdgqhqkhx3/Basic%201%20Full%20Theory%20pdf.pdf?dl=0");
 
 
         }
@@ -248,20 +250,20 @@ public class PdfrenderActivity extends AppCompatActivity {
         protected String doInBackground(String... Url) {
             try {
                 URL url = new URL(Url[0]);
-                URLConnection connection = url.openConnection();
-                connection.connect();
+                HttpURLConnection urlconnection = (HttpURLConnection)url.openConnection();
+                urlconnection.connect();
 
                 // Detect the file lenghth
-                int fileLength = connection.getContentLength();
+                int fileLength = urlconnection.getContentLength();
 
                 // Locate storage location
-                String extStorageDirectory = getExternalCacheDir().toString();
-                File folder = new File(extStorageDirectory, "aarzu1");
+                String extStorageDirectory = Environment.getExternalStorageDirectory().toString();
+                File folder = new File(extStorageDirectory, "ABC");
                 folder.mkdir();
-                File pdfFile = new File(folder, PDFFILENAME);
+                File pdfFile = new File(folder, "xyz.pdf");
 
                 // Download the file
-                InputStream input = new BufferedInputStream(url.openStream());
+                InputStream input = urlconnection.getInputStream();
 
                 // Save the downloaded file
                 OutputStream output = new FileOutputStream(pdfFile);
@@ -315,5 +317,3 @@ public class PdfrenderActivity extends AppCompatActivity {
 
     }
 }
-
-

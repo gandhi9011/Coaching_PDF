@@ -1,6 +1,8 @@
 package com.example.admin.karsol_ano.course;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
@@ -26,6 +28,7 @@ import com.example.admin.karsol_ano.MenuItems.ChangePasswordActivity;
 import com.example.admin.karsol_ano.MenuItems.ContactUsActivity;
 import com.example.admin.karsol_ano.MenuItems.Developed_Activity;
 import com.example.admin.karsol_ano.MenuItems.PriceActivity;
+import com.example.admin.karsol_ano.PdfrenderActivity;
 import com.example.admin.karsol_ano.R;
 
 import org.apache.http.HttpEntity;
@@ -86,16 +89,19 @@ public class EnglishGujratiActivity extends AppCompatActivity {
         Toast.makeText(this,CoursePart+""+Course,Toast.LENGTH_LONG).show();
 
 
+
         english.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)
             {
-                new DownloadFileEnglish().execute("https://aarzucompact.herokuapp.com/GetCourseUrlServlet?course="+Course+"&coursepart="+CoursePart+"&language=ENGLISH");
-//                Intent pdfview=new Intent(EnglishGujratiActivity.this,PdfrenderActivity.class);
-//                pdfview.putExtra("Course",Course);
-//                pdfview.putExtra("CoursePart",CoursePart);
-//                pdfview.putExtra("Language","ENGLISH");
-//                startActivity(pdfview);
+                SharedPreferences sharedpreferences = getSharedPreferences("PDFStructure", Context.MODE_PRIVATE);
+                final SharedPreferences.Editor editor=sharedpreferences.edit();
+                editor.putString("Course",Course);
+                editor.putString("CoursePart",CoursePart);
+                editor.putString("Language","ENGLISH");
+                editor.commit();
+                GetXMLTask downloadpdf=new GetXMLTask();
+                downloadpdf.execute("https://aarzucompact.herokuapp.com/GetCourseUrlServlet?course="+Course+"&coursepart="+CoursePart+"&language=ENGLISH");
 
             }
         });
@@ -106,12 +112,15 @@ public class EnglishGujratiActivity extends AppCompatActivity {
             @Override
             public void onClick(View view)
             {
-//                Intent pdfview=new Intent(EnglishGujratiActivity.this,PdfrenderActivity.class);
-//                pdfview.putExtra("Course",Course);
-//                pdfview.putExtra("CoursePart",CoursePart);
-//                pdfview.putExtra("Language","GUJRATI");
-//                startActivity(pdfview);
-                new DownloadFileGujrati().execute("https://aarzucompact.herokuapp.com/GetCourseUrlServlet?course="+Course+"&coursepart="+CoursePart+"&language=GUJRATI");
+                SharedPreferences sharedpreferences = getSharedPreferences("PDFStructure", Context.MODE_PRIVATE);
+                final SharedPreferences.Editor editor=sharedpreferences.edit();
+                editor.putString("Course",Course);
+                editor.putString("CoursePart",CoursePart);
+                editor.putString("Language","GUJRATI");
+                editor.commit();
+
+                GetXMLTask downloadpdf=new GetXMLTask();
+                downloadpdf.execute("https://aarzucompact.herokuapp.com/GetCourseUrlServlet?course="+Course+"&coursepart="+CoursePart+"&language=GUJRATI");
 
             }
         });
@@ -120,6 +129,59 @@ public class EnglishGujratiActivity extends AppCompatActivity {
 
 
     }
+
+
+
+    private class GetXMLTask extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... urls) {
+            String output = null;
+
+                output = getOutputFromUrl(urls[0]);
+                Log.e("",urls[0]+""+output);
+
+            return output;
+        }
+
+        private String getOutputFromUrl(String url) {
+            String output = null;
+            try {
+                DefaultHttpClient httpClient = new DefaultHttpClient();
+                HttpGet httpGet = new HttpGet(url);
+
+                HttpResponse httpResponse = httpClient.execute(httpGet);
+                HttpEntity httpEntity = httpResponse.getEntity();
+                output = EntityUtils.toString(httpEntity);
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            } catch (ClientProtocolException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return output;
+        }
+
+        @Override
+        protected void onPostExecute(String output) {
+            if (output.trim().equals("error"))
+            {
+                Toast.makeText(EnglishGujratiActivity.this,"Server Problem",Toast.LENGTH_LONG).show();
+
+            }
+            else
+            {
+                Toast.makeText(EnglishGujratiActivity.this,output,Toast.LENGTH_LONG).show();
+                Intent pdfview=new Intent(EnglishGujratiActivity.this,PdfrenderActivity.class);
+                pdfview.putExtra("Link",output.trim());
+                startActivity(pdfview);
+            }
+        }
+    }
+
+
+
+
 
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -160,120 +222,6 @@ public class EnglishGujratiActivity extends AppCompatActivity {
         }
     }
 
-
-    private class DownloadFileEnglish extends AsyncTask<String, Void, String> {
-
-
-
-
-        @Override
-        protected String doInBackground(String... Url) {
-            String output = null;
-            Log.e("result",Url[0]);
-                output = getOutputFromUrl(Url[0]);
-
-            return output;
-        }
-
-        private String getOutputFromUrl(String url) {
-            String output = null;
-            try {
-                DefaultHttpClient httpClient = new DefaultHttpClient();
-                HttpGet httpGet = new HttpGet(url);
-
-                HttpResponse httpResponse = httpClient.execute(httpGet);
-                HttpEntity httpEntity = httpResponse.getEntity();
-                output = EntityUtils.toString(httpEntity);
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            } catch (ClientProtocolException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return output;
-        }
-
-
-        protected void onPostExecute(String Result)
-        {
-
-            if (Result!=null)
-            {
-                Toast.makeText(EnglishGujratiActivity.this,Result,Toast.LENGTH_LONG).show();
-            }
-//                Intent pdfview=new Intent(EnglishGujratiActivity.this,PdfrenderActivity.class);
-//                pdfview.putExtra("Link",Result);
-//                pdfview.putExtra("CoursePart",CoursePart);
-//                pdfview.putExtra("Language","English");
-//                startActivity(pdfview);
-//            }
-            else
-            {
-                Toast.makeText(EnglishGujratiActivity.this,"Server Problem",Toast.LENGTH_LONG).show();
-            }
-        }
-
-
-    }
-
-
-
-    private class DownloadFileGujrati extends AsyncTask<String, Void, String> {
-
-
-
-
-        @Override
-        protected String doInBackground(String... Url) {
-            String output = null;
-            Log.e("result",Url[0]);
-            output = getOutputFromUrl(Url[0]);
-
-
-            return output;
-        }
-
-        private String getOutputFromUrl(String url) {
-            String output = null;
-            try {
-                DefaultHttpClient httpClient = new DefaultHttpClient();
-                HttpGet httpGet = new HttpGet(url);
-
-                HttpResponse httpResponse = httpClient.execute(httpGet);
-                HttpEntity httpEntity = httpResponse.getEntity();
-                output = EntityUtils.toString(httpEntity);
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            } catch (ClientProtocolException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return output;
-        }
-
-
-        protected void onPostExecute(String Result)
-        {
-
-            if (Result!=null)
-            {
-                Toast.makeText(EnglishGujratiActivity.this,Result,Toast.LENGTH_LONG).show();
-//                Intent pdfview=new Intent(EnglishGujratiActivity.this,PdfrenderActivity.class);
-//                pdfview.putExtra("Link",Result);
-//                pdfview.putExtra("Course",CoursePart);
-//                pdfview.putExtra("Language","Gujrati");
-//                startActivity(pdfview);
-            }
-            else
-            {
-                Toast.makeText(EnglishGujratiActivity.this,"Server Problem",Toast.LENGTH_LONG).show();
-            }
-        }
-
-
-    }
 
 
 }
