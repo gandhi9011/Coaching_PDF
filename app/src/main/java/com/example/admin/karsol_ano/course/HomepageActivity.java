@@ -16,9 +16,9 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.admin.karsol_ano.LoginModule.ForgotPasswordActivity;
 import com.example.admin.karsol_ano.LoginModule.LoginActivity;
 import com.example.admin.karsol_ano.MenuItems.AboutUsActivity;
-import com.example.admin.karsol_ano.MenuItems.ChangePasswordActivity;
 import com.example.admin.karsol_ano.MenuItems.ContactUsActivity;
 import com.example.admin.karsol_ano.MenuItems.Developed_Activity;
 import com.example.admin.karsol_ano.MenuItems.PriceActivity;
@@ -103,7 +103,7 @@ TextView  tvbasic,tvcompany,tvpartnership;
                 startActivity(new Intent(this, LoginActivity.class));
                 return true;
             case R.id.action_changepass:
-                startActivity(new Intent(this, ChangePasswordActivity.class));
+                startActivity(new Intent(this, ForgotPasswordActivity.class));
                 return true;
 
 

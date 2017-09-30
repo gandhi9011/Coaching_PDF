@@ -13,7 +13,7 @@
         android:id="@+id/imageView"
         android:layout_width="436dp"
         android:layout_height="229dp"
-        app:srcCompat="@drawable/aarzu"
+        app:srcCompat="@drawable/home1"
         android:layout_weight="0.26" />
 
     <LinearLayout

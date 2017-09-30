@@ -22,9 +22,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.admin.karsol_ano.LoginModule.ForgotPasswordActivity;
 import com.example.admin.karsol_ano.LoginModule.LoginActivity;
 import com.example.admin.karsol_ano.MenuItems.AboutUsActivity;
-import com.example.admin.karsol_ano.MenuItems.ChangePasswordActivity;
 import com.example.admin.karsol_ano.MenuItems.ContactUsActivity;
 import com.example.admin.karsol_ano.MenuItems.Developed_Activity;
 import com.example.admin.karsol_ano.MenuItems.PriceActivity;
@@ -166,12 +166,12 @@ public class EnglishGujratiActivity extends AppCompatActivity {
         protected void onPostExecute(String output) {
             if (output.trim().equals("error"))
             {
-                Toast.makeText(EnglishGujratiActivity.this,"Server Problem",Toast.LENGTH_LONG).show();
+                Toast.makeText(EnglishGujratiActivity.this,"PDF Not Available",Toast.LENGTH_LONG).show();
 
             }
             else
             {
-                Toast.makeText(EnglishGujratiActivity.this,output,Toast.LENGTH_LONG).show();
+                //Toast.makeText(EnglishGujratiActivity.this,output,Toast.LENGTH_LONG).show();
                 Intent pdfview=new Intent(EnglishGujratiActivity.this,PdfrenderActivity.class);
                 pdfview.putExtra("Link",output.trim());
                 startActivity(pdfview);
@@ -212,7 +212,7 @@ public class EnglishGujratiActivity extends AppCompatActivity {
                 startActivity(new Intent(this, LoginActivity.class));
                 return true;
             case R.id.action_changepass:
-                startActivity(new Intent(this, ChangePasswordActivity.class));
+                startActivity(new Intent(this, ForgotPasswordActivity.class));
                 return true;
 
 

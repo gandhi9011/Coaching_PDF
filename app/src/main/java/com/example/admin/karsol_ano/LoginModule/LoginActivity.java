@@ -3,6 +3,7 @@ package com.example.admin.karsol_ano.LoginModule;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -11,10 +12,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -27,6 +30,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.admin.karsol_ano.MenuItems.AboutUsActivity;
 import com.example.admin.karsol_ano.MenuItems.ContactUsActivity;
@@ -44,6 +48,7 @@ import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 /**
  * A login screen that offers login via email/password.
@@ -57,6 +62,7 @@ public class LoginActivity extends AppCompatActivity
     private static final int REQUEST_READ_CONTACTS = 0;
     public static final String LOGIN_URL = "https://aarzucompact.herokuapp.com/loginStudentServlet?semail=";
     public static final String REGISTRATION_URL = "https://aarzucompact.herokuapp.com/StudentInsertServlet?semail=";
+    public static final String ForgotPassword_URL="https://aarzucompact.herokuapp.com/StudentForgotPassword?semail=";
 
     /**
      * A dummy authentication store containing known user names and passwords.
@@ -105,13 +111,12 @@ public class LoginActivity extends AppCompatActivity
 
         Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
         Button mEmailRegistrationButton = (Button) findViewById(R.id.email_registration_button);
+        TextView mForgotpassword=(TextView)findViewById(R.id.mforgotpass);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                //attemptLogin();
-                Intent login=new Intent(LoginActivity.this,HomepageActivity.class);
-                startActivity(login);
+                attemptLogin();
 
             }
         });
@@ -119,6 +124,13 @@ public class LoginActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 attemptRegistration();
+            }
+        });
+        mForgotpassword.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                attemptForgotPassword();
             }
         });
 
@@ -178,7 +190,7 @@ public class LoginActivity extends AppCompatActivity
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            mAuthTask = new UserLoginTask(email, password);
+            mAuthTask = new UserLoginTask(email, password,1);
             mAuthTask.execute(LOGIN_URL);
         }
     }
@@ -228,9 +240,92 @@ public class LoginActivity extends AppCompatActivity
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            mAuthTask = new UserLoginTask(email, password);
+            mAuthTask = new UserLoginTask(email, password,2);
             mAuthTask.execute(REGISTRATION_URL);
         }
+    }
+
+    private void attemptForgotPassword() {
+
+        final String[] email_forgot = new String[1];
+        LayoutInflater li = LayoutInflater.from(LoginActivity.this);
+        View promptsView = li.inflate(R.layout.forgot_prompt, null);
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                LoginActivity.this);
+
+        // set prompts.xml to alertdialog builder
+        alertDialogBuilder.setView(promptsView);
+
+        final EditText userInput = (EditText) promptsView
+                .findViewById(R.id.editTextDialogUserInput);
+
+        // set dialog message
+        alertDialogBuilder
+                .setCancelable(false)
+                .setPositiveButton("OK",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,int id) {
+                                // get user input and set it to result
+                                // edit text
+
+                                if (mAuthTask != null) {
+                                    return;
+                                }
+
+                                // Reset errors.
+                                userInput.setError(null);
+
+                                // Store values at the time of the login attempt.
+                                String email =userInput.getText().toString();
+
+                                boolean cancel = false;
+                                View focusView = null;
+
+
+
+                                // Check for a valid email address.
+                                if (TextUtils.isEmpty(email)) {
+                                    userInput.setError(getString(R.string.error_field_required));
+                                    focusView = userInput;
+                                    cancel = true;
+                                } else if (!isEmailValid(email)) {
+                                    userInput.setError(getString(R.string.error_invalid_email));
+                                    focusView = userInput;
+                                    cancel = true;
+                                }
+
+                                if (cancel) {
+                                    // There was an error; don't attempt login and focus the first
+                                    // form field with an error.
+                                    focusView.requestFocus();
+                                } else {
+                                    // Show a progress spinner, and kick off a background task to
+                                    // perform the user login attempt.
+                                    showProgress(true);
+                                    mAuthTask = new UserLoginTask(email, "forgot",3);
+                                    mAuthTask.execute(ForgotPassword_URL);
+                                }
+
+                            }
+                        })
+                .setNegativeButton("Cancel",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+        // create alert dialog
+        AlertDialog alertDialog = alertDialogBuilder.create();
+
+        // show it
+        alertDialog.show();
+
+
+
+
+
     }
 
     private boolean isEmailValid(String email) {
@@ -288,11 +383,16 @@ public class LoginActivity extends AppCompatActivity
 
         private final String mEmail;
         private final String mPassword;
+        private int mx;
 
-        UserLoginTask(String email, String password) {
+        UserLoginTask(String email, String password,int x)
+        {
             mEmail = email;
             mPassword = password;
+            mx=x;
         }
+
+
 
         @Override
         protected String doInBackground(String... params) {
@@ -309,10 +409,24 @@ public class LoginActivity extends AppCompatActivity
                 Log.e("12345101010","456789");
                 return e.getMessage();
             }
-            Log.e("123456",""+getOutputFromUrl(params[0]+mEmail+"&spassword="+mPassword));
-            Log.e("123456789",params[0]+mEmail+"&spassword="+mPassword);
+            try {
+                if(mPassword.equals("forgot") && mx==3) {
 
-            return getOutputFromUrl(params[0]+mEmail+"&spassword="+mPassword);
+
+                    return getOutputFromUrl(params[0] + URLEncoder.encode(mEmail, "UTF-8"));
+
+                }
+
+                else
+                    {
+                        return getOutputFromUrl(params[0] + URLEncoder.encode(mEmail, "UTF-8") + "&spassword=" + URLEncoder.encode(mPassword, "UTF-8"));
+                    }
+                }
+                catch (IOException IO)
+            {
+                Log.e("errr",IO.getMessage());
+                return null;
+            }
 
 
 
@@ -346,14 +460,71 @@ public class LoginActivity extends AppCompatActivity
 
             showProgress(false);
             Log.e("123456789",""+output);
-            if (output.trim().equals("success")) {
+            if (output.trim().equals("success")&& mx==1) {
                 Log.e("123456789--in if",""+output);
                 Intent login=new Intent(LoginActivity.this,HomepageActivity.class);
                 startActivity(login);
 
             }
+
+                if(output.trim().equals("success")&& mx==2)
+            {
+                Log.e("123456789--in if",""+output);
+                final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(LoginActivity.this);
+
+                // set title
+                alertDialogBuilder.setTitle("New User");
+
+                // set dialog message
+                alertDialogBuilder
+                        .setMessage("Registration done!")
+                        .setCancelable(false)
+                        .setPositiveButton("Login",new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                // if this button is clicked, close
+                                // current activity
+                                dialog.dismiss();
+                            }
+                        });
+                // create alert dialog
+                AlertDialog alertDialog = alertDialogBuilder.create();
+
+                // show it
+                alertDialog.show();
+            }
+
+                 if(mx==3)
+            {
+                final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(LoginActivity.this);
+
+                // set title
+                alertDialogBuilder.setTitle("Your Password");
+
+                // set dialog message
+                alertDialogBuilder
+                        .setMessage(output)
+                        .setCancelable(false)
+                        .setPositiveButton("Login",new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                // if this button is clicked, close
+                                // current activity
+                                dialog.dismiss();
+                            }
+                        });
+                // create alert dialog
+                AlertDialog alertDialog = alertDialogBuilder.create();
+
+                // show it
+                alertDialog.show();
+            }
             else
-             {
+            {  if(mx==1 && output.trim().equals("error")) {
+                Toast.makeText(LoginActivity.this, "login error", Toast.LENGTH_LONG).show();
+            }
+            else if(mx==1 && output.trim().equals("logout"))
+            {
+                Toast.makeText(LoginActivity.this, "Registraionfail", Toast.LENGTH_LONG).show();
+            }
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
             }
@@ -393,6 +564,52 @@ public class LoginActivity extends AppCompatActivity
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+
+        private String getEmail()
+        {
+            final String[] email_forgot = new String[1];
+            LayoutInflater li = LayoutInflater.from(LoginActivity.this);
+            View promptsView = li.inflate(R.layout.forgot_prompt, null);
+
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                    LoginActivity.this);
+
+            // set prompts.xml to alertdialog builder
+            alertDialogBuilder.setView(promptsView);
+
+            final EditText userInput = (EditText) promptsView
+                    .findViewById(R.id.editTextDialogUserInput);
+
+            // set dialog message
+            alertDialogBuilder
+                    .setCancelable(false)
+                    .setPositiveButton("OK",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog,int id) {
+                                    // get user input and set it to result
+                                    // edit text
+
+                                }
+                            })
+                    .setNegativeButton("Cancel",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog,int id) {
+                                    dialog.cancel();
+                                }
+                            });
+
+            // create alert dialog
+            AlertDialog alertDialog = alertDialogBuilder.create();
+
+            // show it
+            alertDialog.show();
+
+            return userInput.getText().toString();
+
+
+
     }
 
 }

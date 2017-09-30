@@ -44,7 +44,8 @@
         <activity android:name=".MenuItems.ContactUsActivity" />
         <activity android:name=".MenuItems.AboutUsActivity" />
         <activity android:name=".MenuItems.PriceActivity" />
-        <activity android:name=".MenuItems.ChangePasswordActivity"></activity>
+        <activity android:name=".MenuItems.ChangePasswordActivity" />
+        <activity android:name=".LoginModule.ForgotPasswordActivity"></activity>
     </application>
 
 </manifest>

@@ -3,10 +3,10 @@ package com.example.admin.karsol_ano.course;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -16,9 +16,9 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.admin.karsol_ano.LoginModule.ForgotPasswordActivity;
 import com.example.admin.karsol_ano.LoginModule.LoginActivity;
 import com.example.admin.karsol_ano.MenuItems.AboutUsActivity;
-import com.example.admin.karsol_ano.MenuItems.ChangePasswordActivity;
 import com.example.admin.karsol_ano.MenuItems.ContactUsActivity;
 import com.example.admin.karsol_ano.MenuItems.Developed_Activity;
 import com.example.admin.karsol_ano.MenuItems.PriceActivity;
@@ -96,7 +96,7 @@ public class CompanyActivity extends AppCompatActivity {
                 startActivity(new Intent(this, LoginActivity.class));
                 return true;
             case R.id.action_changepass:
-                startActivity(new Intent(this, ChangePasswordActivity.class));
+                startActivity(new Intent(this, ForgotPasswordActivity.class));
                 return true;
 
 
