@@ -524,9 +524,10 @@ public class LoginActivity extends AppCompatActivity
             else if(mx==1 && output.trim().equals("logout"))
             {
                 Toast.makeText(LoginActivity.this, "Registraionfail", Toast.LENGTH_LONG).show();
-            }
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
+            }
+
             }
         }
 
@@ -567,50 +568,6 @@ public class LoginActivity extends AppCompatActivity
     }
 
 
-        private String getEmail()
-        {
-            final String[] email_forgot = new String[1];
-            LayoutInflater li = LayoutInflater.from(LoginActivity.this);
-            View promptsView = li.inflate(R.layout.forgot_prompt, null);
-
-            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-                    LoginActivity.this);
-
-            // set prompts.xml to alertdialog builder
-            alertDialogBuilder.setView(promptsView);
-
-            final EditText userInput = (EditText) promptsView
-                    .findViewById(R.id.editTextDialogUserInput);
-
-            // set dialog message
-            alertDialogBuilder
-                    .setCancelable(false)
-                    .setPositiveButton("OK",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog,int id) {
-                                    // get user input and set it to result
-                                    // edit text
-
-                                }
-                            })
-                    .setNegativeButton("Cancel",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog,int id) {
-                                    dialog.cancel();
-                                }
-                            });
-
-            // create alert dialog
-            AlertDialog alertDialog = alertDialogBuilder.create();
-
-            // show it
-            alertDialog.show();
-
-            return userInput.getText().toString();
-
-
-
-    }
 
 }
 
