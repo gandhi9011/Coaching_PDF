@@ -22,7 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.admin.karsol_ano.LoginModule.ForgotPasswordActivity;
+import com.example.admin.karsol_ano.MenuItems.ForgotPasswordActivity;
 import com.example.admin.karsol_ano.LoginModule.LoginActivity;
 import com.example.admin.karsol_ano.MenuItems.AboutUsActivity;
 import com.example.admin.karsol_ano.MenuItems.ContactUsActivity;

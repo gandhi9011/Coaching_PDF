@@ -12,7 +12,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.pdf.PdfRenderer;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.ParcelFileDescriptor;
 import android.os.PowerManager;
 import android.support.v4.content.ContextCompat;
@@ -157,7 +156,7 @@ public class PdfrenderActivity extends AppCompatActivity {
      */
     private void openRenderer() throws IOException {
         // In this sample, we read a PDF from the assets directory.
-        File file = new File(Environment.getExternalStorageDirectory(), "/aarzu/"+PDFFILENAME);
+        File file = new File(getCacheDir(), "/aarzu/"+PDFFILENAME);
         if (!file.exists()) {
 
             new DownloadFile().execute(URL_LINK+"1");
@@ -275,7 +274,7 @@ public class PdfrenderActivity extends AppCompatActivity {
                 int fileLength = connection.getContentLength();
 
                 // Locate storage location
-                String extStorageDirectory = Environment.getExternalStorageDirectory().toString();
+                String extStorageDirectory = getCacheDir().toString();
                 File folder = new File(extStorageDirectory, "aarzu");
                 folder.mkdir();
                 File pdfFile = new File(folder, PDFFILENAME);

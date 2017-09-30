@@ -1,4 +1,4 @@
-package com.example.admin.karsol_ano.LoginModule;
+package com.example.admin.karsol_ano.MenuItems;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.admin.karsol_ano.LoginModule.LoginActivity;
 import com.example.admin.karsol_ano.R;
 
 import org.apache.http.HttpEntity;
@@ -39,7 +40,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_forgot_password);
+        setContentView(R.layout.activity_change2_password);
         email=(EditText)findViewById(R.id.editText);
         new_pass=(EditText)findViewById(R.id.editText2);
         old_pass=(EditText)findViewById(R.id.editText3);
@@ -164,7 +165,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
             Log.e("123456789",params[0]+mEmail+"&spassword="+mOldPassward+"&npassword="+mPassword);
                 try
                 {
-                    return getOutputFromUrl(params[0] + URLEncoder.encode(mEmail, "UTF-8") + "&spassword=" + URLEncoder.encode(mOldPassward, "UTF-8") + "&npassword=" + URLEncoder.encode(mPassword, "UTF-8"));
+                    return getOutputFromUrl(params[0]+URLEncoder.encode(mEmail, "UTF-8")+"&spassword="+URLEncoder.encode(mOldPassward, "UTF-8")+"&npassword="+URLEncoder.encode(mPassword, "UTF-8"));
                 }
                 catch (IOException e)
                 {
@@ -193,7 +194,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            Log.e("123321",""+output);
+            Log.e("123321",output);
             return output;
         }
 
@@ -202,7 +203,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
             mAuthTask = null;
 
 
-            Log.e("123456789",""+output);
+            Log.e("123456789beforeif",output);
             if (output.trim().equals("success")) {
                 final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ForgotPasswordActivity.this);
 

@@ -1,23 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.admin.karsol_ano.MenuItems.AboutUsActivity">
 
-    <ScrollView
 
-        android:layout_width="368dp"
-        android:layout_height="495dp"
-        tools:layout_editor_absoluteY="8dp"
-        tools:layout_editor_absoluteX="8dp">
-    <TextView
+    <ImageView
+        android:id="@+id/imageViewabt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/appbar"
-        android:textSize="18sp"
-        android:id="@+id/aboutus"/>
-    </ScrollView>
-
-</android.support.constraint.ConstraintLayout>
+        android:layout_weight="1"
+        app:srcCompat="@drawable/aboutus" />
+</LinearLayout>
