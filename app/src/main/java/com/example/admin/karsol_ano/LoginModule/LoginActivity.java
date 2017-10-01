@@ -355,7 +355,7 @@ public class LoginActivity extends AppCompatActivity {
 //        pattern = Pattern.compile(PASSWORD_PATTERN);
 //        matcher = pattern.matcher(password);
 
-        return password.length()>5;
+        return password.length()>=5;
     }
 
     /**
