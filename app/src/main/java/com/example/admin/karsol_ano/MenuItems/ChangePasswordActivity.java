@@ -32,8 +32,6 @@ import org.apache.http.util.EntityUtils;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class ChangePasswordActivity extends AppCompatActivity {
     EditText email, new_pass, old_pass;
@@ -85,7 +83,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
         View focusView = null;
 
         // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(oldpassword) && oldpassword.length() > 4) {
+        if (!TextUtils.isEmpty(oldpassword) && !isPasswordValid(newpassword)) {
             old_pass.setError(getString(R.string.error_invalid_password));
             focusView = old_pass;
             cancel = true;
@@ -127,13 +125,13 @@ public class ChangePasswordActivity extends AppCompatActivity {
     }
 
     private boolean isPasswordValid(String password) {
-        Pattern pattern;
-        Matcher matcher;
-        final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{4,}$";
-        pattern = Pattern.compile(PASSWORD_PATTERN);
-        matcher = pattern.matcher(password);
+//        Pattern pattern;
+//        Matcher matcher;
+//        final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{4,}$";
+//        pattern = Pattern.compile(PASSWORD_PATTERN);
+//        matcher = pattern.matcher(password);
 
-        return matcher.matches();
+        return password.length()>5;
     }
 
     public class UserLoginTask extends AsyncTask<String, Void, String> {

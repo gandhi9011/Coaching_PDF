@@ -3,10 +3,12 @@ package com.example.admin.karsol_ano.LoginModule;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -49,8 +51,6 @@ import org.apache.http.util.EntityUtils;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * A login screen that offers login via email/password.
@@ -84,9 +84,35 @@ public class LoginActivity extends AppCompatActivity {
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        if(!isNetworkConnected())
+        {
+            final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(LoginActivity.this);
+
+            // set title
+            alertDialogBuilder.setTitle("Connection Error");
+
+            // set dialog message
+            alertDialogBuilder
+                    .setMessage("You are not Connected with Network.")
+                    .setCancelable(false)
+                    .setPositiveButton("Connect", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            Intent intent=new Intent(LoginActivity.this,LoginActivity.class);
+                            startActivity(intent);
+                            // if this button is clicked, close
+                            // current activity
+                            dialog.dismiss();
+                        }
+                    });
+            // create alert dialog
+            AlertDialog alertDialog = alertDialogBuilder.create();
+
+            // show it
+            alertDialog.show();
+        }
         if (android.os.Build.VERSION.SDK_INT >= 21) {
             Window statusBar = getWindow();
             statusBar.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -323,13 +349,13 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private boolean isPasswordValid(String password) {
-        Pattern pattern;
-        Matcher matcher;
-        final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{4,}$";
-        pattern = Pattern.compile(PASSWORD_PATTERN);
-        matcher = pattern.matcher(password);
+//        Pattern pattern;
+//        Matcher matcher;
+//        final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{4,}$";
+//        pattern = Pattern.compile(PASSWORD_PATTERN);
+//        matcher = pattern.matcher(password);
 
-        return matcher.matches();
+        return password.length()>5;
     }
 
     /**
@@ -543,6 +569,11 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        return cm.getActiveNetworkInfo() != null;
+    }
 
 }
 
