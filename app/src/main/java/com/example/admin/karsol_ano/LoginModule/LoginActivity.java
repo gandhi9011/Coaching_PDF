@@ -49,21 +49,21 @@ import org.apache.http.util.EntityUtils;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * A login screen that offers login via email/password.
  */
-public class LoginActivity extends AppCompatActivity
-{
+public class LoginActivity extends AppCompatActivity {
 
+    public static final String LOGIN_URL = "https://aarzucompact.herokuapp.com/loginStudentServlet?semail=";
+    public static final String REGISTRATION_URL = "https://aarzucompact.herokuapp.com/StudentInsertServlet?semail=";
+    public static final String ForgotPassword_URL = "https://aarzucompact.herokuapp.com/StudentForgotPassword?semail=";
     /**
      * Id to identity READ_CONTACTS permission request.
      */
     private static final int REQUEST_READ_CONTACTS = 0;
-    public static final String LOGIN_URL = "https://aarzucompact.herokuapp.com/loginStudentServlet?semail=";
-    public static final String REGISTRATION_URL = "https://aarzucompact.herokuapp.com/StudentInsertServlet?semail=";
-    public static final String ForgotPassword_URL="https://aarzucompact.herokuapp.com/StudentForgotPassword?semail=";
-
     /**
      * A dummy authentication store containing known user names and passwords.
      * TODO: remove after connecting to a real authentication system.
@@ -111,7 +111,7 @@ public class LoginActivity extends AppCompatActivity
 
         Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
         Button mEmailRegistrationButton = (Button) findViewById(R.id.email_registration_button);
-        TextView mForgotpassword=(TextView)findViewById(R.id.mforgotpass);
+        TextView mForgotpassword = (TextView) findViewById(R.id.mforgotpass);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -128,8 +128,7 @@ public class LoginActivity extends AppCompatActivity
         });
         mForgotpassword.setOnClickListener(new OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 attemptForgotPassword();
             }
         });
@@ -137,10 +136,6 @@ public class LoginActivity extends AppCompatActivity
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
     }
-
-
-
-
 
 
     /**
@@ -190,12 +185,10 @@ public class LoginActivity extends AppCompatActivity
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            mAuthTask = new UserLoginTask(email, password,1);
+            mAuthTask = new UserLoginTask(email, password, 1);
             mAuthTask.execute(LOGIN_URL);
         }
     }
-
-
 
 
     private void attemptRegistration() {
@@ -240,7 +233,7 @@ public class LoginActivity extends AppCompatActivity
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            mAuthTask = new UserLoginTask(email, password,2);
+            mAuthTask = new UserLoginTask(email, password, 2);
             mAuthTask.execute(REGISTRATION_URL);
         }
     }
@@ -265,7 +258,7 @@ public class LoginActivity extends AppCompatActivity
                 .setCancelable(false)
                 .setPositiveButton("OK",
                         new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog,int id) {
+                            public void onClick(DialogInterface dialog, int id) {
                                 // get user input and set it to result
                                 // edit text
 
@@ -277,11 +270,10 @@ public class LoginActivity extends AppCompatActivity
                                 userInput.setError(null);
 
                                 // Store values at the time of the login attempt.
-                                String email =userInput.getText().toString();
+                                String email = userInput.getText().toString();
 
                                 boolean cancel = false;
                                 View focusView = null;
-
 
 
                                 // Check for a valid email address.
@@ -303,7 +295,7 @@ public class LoginActivity extends AppCompatActivity
                                     // Show a progress spinner, and kick off a background task to
                                     // perform the user login attempt.
                                     showProgress(true);
-                                    mAuthTask = new UserLoginTask(email, "forgot",3);
+                                    mAuthTask = new UserLoginTask(email, "forgot", 3);
                                     mAuthTask.execute(ForgotPassword_URL);
                                 }
 
@@ -311,7 +303,7 @@ public class LoginActivity extends AppCompatActivity
                         })
                 .setNegativeButton("Cancel",
                         new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog,int id) {
+                            public void onClick(DialogInterface dialog, int id) {
                                 dialog.cancel();
                             }
                         });
@@ -323,9 +315,6 @@ public class LoginActivity extends AppCompatActivity
         alertDialog.show();
 
 
-
-
-
     }
 
     private boolean isEmailValid(String email) {
@@ -334,8 +323,13 @@ public class LoginActivity extends AppCompatActivity
     }
 
     private boolean isPasswordValid(String password) {
-        //TODO: Replace this with your own logic
-        return password.length() > 4;
+        Pattern pattern;
+        Matcher matcher;
+        final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{4,}$";
+        pattern = Pattern.compile(PASSWORD_PATTERN);
+        matcher = pattern.matcher(password);
+
+        return matcher.matches();
     }
 
     /**
@@ -374,171 +368,6 @@ public class LoginActivity extends AppCompatActivity
         }
     }
 
-
-
-
-
-
-    public class UserLoginTask extends AsyncTask<String, Void, String> {
-
-        private final String mEmail;
-        private final String mPassword;
-        private int mx;
-
-        UserLoginTask(String email, String password,int x)
-        {
-            mEmail = email;
-            mPassword = password;
-            mx=x;
-        }
-
-
-
-        @Override
-        protected String doInBackground(String... params) {
-            // TODO: attempt authentication against a network service.
-
-            try {
-                // Simulate network access.
-                Thread.sleep(2000);
-
-            }
-
-            catch (InterruptedException e)
-            {
-                Log.e("12345101010","456789");
-                return e.getMessage();
-            }
-            try {
-                if(mPassword.equals("forgot") && mx==3) {
-
-
-                    return getOutputFromUrl(params[0] + URLEncoder.encode(mEmail, "UTF-8"));
-
-                }
-
-                else
-                    {
-                        return getOutputFromUrl(params[0] + URLEncoder.encode(mEmail, "UTF-8") + "&spassword=" + URLEncoder.encode(mPassword, "UTF-8"));
-                    }
-                }
-                catch (IOException IO)
-            {
-                Log.e("errr",IO.getMessage());
-                return null;
-            }
-
-
-
-        }
-
-        private String getOutputFromUrl(String url) {
-            String output = null;
-            try {
-                DefaultHttpClient httpClient = new DefaultHttpClient();
-                HttpGet httpGet = new HttpGet(url);
-                HttpResponse httpResponse = httpClient.execute(httpGet);
-                HttpEntity httpEntity = httpResponse.getEntity();
-                output = EntityUtils.toString(httpEntity);
-
-                Log.e("1233211111",""+output);
-
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            } catch (ClientProtocolException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            Log.e("123321",""+output);
-            return output;
-        }
-
-        @Override
-        protected void onPostExecute(final String output) {
-            mAuthTask = null;
-
-            showProgress(false);
-            Log.e("123456789",""+output);
-            if (output.trim().equals("success")&& mx==1) {
-                Log.e("123456789--in if",""+output);
-                Intent login=new Intent(LoginActivity.this,HomepageActivity.class);
-                startActivity(login);
-
-            }
-
-                if(output.trim().equals("success")&& mx==2)
-            {
-                Log.e("123456789--in if",""+output);
-                final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(LoginActivity.this);
-
-                // set title
-                alertDialogBuilder.setTitle("New User");
-
-                // set dialog message
-                alertDialogBuilder
-                        .setMessage("Registration done!")
-                        .setCancelable(false)
-                        .setPositiveButton("Login",new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                // if this button is clicked, close
-                                // current activity
-                                dialog.dismiss();
-                            }
-                        });
-                // create alert dialog
-                AlertDialog alertDialog = alertDialogBuilder.create();
-
-                // show it
-                alertDialog.show();
-            }
-
-                 if(mx==3)
-            {
-                final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(LoginActivity.this);
-
-                // set title
-                alertDialogBuilder.setTitle("Your Password");
-
-                // set dialog message
-                alertDialogBuilder
-                        .setMessage(output)
-                        .setCancelable(false)
-                        .setPositiveButton("Login",new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                // if this button is clicked, close
-                                // current activity
-                                dialog.dismiss();
-                            }
-                        });
-                // create alert dialog
-                AlertDialog alertDialog = alertDialogBuilder.create();
-
-                // show it
-                alertDialog.show();
-            }
-            else
-            {  if(mx==1 && output.trim().equals("error")) {
-                Toast.makeText(LoginActivity.this, "login error", Toast.LENGTH_LONG).show();
-            }
-            else if(mx==1 && output.trim().equals("logout"))
-            {
-                Toast.makeText(LoginActivity.this, "Registraionfail", Toast.LENGTH_LONG).show();
-                mPasswordView.setError(getString(R.string.error_incorrect_password));
-                mPasswordView.requestFocus();
-            }
-
-            }
-        }
-
-        @Override
-        protected void onCancelled()
-        {
-            mAuthTask = null;
-            showProgress(false);
-        }
-    }
-
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.login_menu_item, menu);
@@ -567,6 +396,152 @@ public class LoginActivity extends AppCompatActivity
         }
     }
 
+    public class UserLoginTask extends AsyncTask<String, Void, String> {
+
+        private final String mEmail;
+        private final String mPassword;
+        private int mx;
+
+        UserLoginTask(String email, String password, int x) {
+            mEmail = email;
+            mPassword = password;
+            mx = x;
+        }
+
+
+        @Override
+        protected String doInBackground(String... params) {
+            // TODO: attempt authentication against a network service.
+
+            try {
+                // Simulate network access.
+                Thread.sleep(2000);
+
+            } catch (InterruptedException e) {
+                Log.e("12345101010", "456789");
+                return e.getMessage();
+            }
+            try {
+                if (mPassword.equals("forgot") && mx == 3) {
+
+
+                    return getOutputFromUrl(params[0] + URLEncoder.encode(mEmail, "UTF-8"));
+
+                } else {
+                    return getOutputFromUrl(params[0] + URLEncoder.encode(mEmail, "UTF-8") + "&spassword=" + URLEncoder.encode(mPassword, "UTF-8"));
+                }
+            } catch (IOException IO) {
+                Log.e("errr", IO.getMessage());
+                return null;
+            }
+
+
+        }
+
+        private String getOutputFromUrl(String url) {
+            String output = null;
+            try {
+                DefaultHttpClient httpClient = new DefaultHttpClient();
+                HttpGet httpGet = new HttpGet(url);
+                HttpResponse httpResponse = httpClient.execute(httpGet);
+                HttpEntity httpEntity = httpResponse.getEntity();
+                output = EntityUtils.toString(httpEntity);
+
+                Log.e("1233211111", "" + output);
+
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            } catch (ClientProtocolException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Log.e("123321", "" + output);
+            return output;
+        }
+
+        @Override
+        protected void onPostExecute(final String output) {
+           try {
+               mAuthTask = null;
+
+               showProgress(false);
+               Log.e("123456789", "" + output);
+               if (output.trim().equals("success") && mx == 1) {
+                   Log.e("123456789--in if", "" + output);
+                   Intent login = new Intent(LoginActivity.this, HomepageActivity.class);
+                   startActivity(login);
+
+               }
+
+               if (output.trim().equals("success") && mx == 2) {
+                   Log.e("123456789--in if", "" + output);
+                   final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(LoginActivity.this);
+
+                   // set title
+                   alertDialogBuilder.setTitle("New User");
+
+                   // set dialog message
+                   alertDialogBuilder
+                           .setMessage("Registration done!")
+                           .setCancelable(false)
+                           .setPositiveButton("Login", new DialogInterface.OnClickListener() {
+                               public void onClick(DialogInterface dialog, int id) {
+                                   // if this button is clicked, close
+                                   // current activity
+                                   dialog.dismiss();
+                               }
+                           });
+                   // create alert dialog
+                   AlertDialog alertDialog = alertDialogBuilder.create();
+
+                   // show it
+                   alertDialog.show();
+               }
+
+               if (mx == 3) {
+                   final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(LoginActivity.this);
+
+                   // set title
+                   alertDialogBuilder.setTitle("Your Password");
+
+                   // set dialog message
+                   alertDialogBuilder
+                           .setMessage(output)
+                           .setCancelable(false)
+                           .setPositiveButton("Login", new DialogInterface.OnClickListener() {
+                               public void onClick(DialogInterface dialog, int id) {
+                                   // if this button is clicked, close
+                                   // current activity
+                                   dialog.dismiss();
+                               }
+                           });
+                   // create alert dialog
+                   AlertDialog alertDialog = alertDialogBuilder.create();
+
+                   // show it
+                   alertDialog.show();
+               } else {
+                   if (mx == 1 && output.trim().equals("error")) {
+                       Toast.makeText(LoginActivity.this, "login error", Toast.LENGTH_LONG).show();
+                   } else if (mx == 1 && output.trim().equals("logout")) {
+                       Toast.makeText(LoginActivity.this, "Fail", Toast.LENGTH_LONG).show();
+                       mPasswordView.setError(getString(R.string.error_incorrect_password));
+                       mPasswordView.requestFocus();
+                   }
+
+               }
+           }
+           catch (Exception e)
+           {e.printStackTrace();}
+        }
+
+        @Override
+        protected void onCancelled() {
+            mAuthTask = null;
+            showProgress(false);
+        }
+    }
 
 
 }

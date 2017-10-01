@@ -32,22 +32,24 @@ import org.apache.http.util.EntityUtils;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ChangePasswordActivity extends AppCompatActivity {
-    EditText email,new_pass,old_pass;
+    EditText email, new_pass, old_pass;
     Button submit1;
     private UserLoginTask mAuthTask = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change2_password);
-        email=(EditText)findViewById(R.id.editText);
-        new_pass=(EditText)findViewById(R.id.editText2);
-        old_pass=(EditText)findViewById(R.id.editText3);
-        submit1=(Button)findViewById(R.id.button);
+        email = (EditText) findViewById(R.id.editText);
+        new_pass = (EditText) findViewById(R.id.editText2);
+        old_pass = (EditText) findViewById(R.id.editText3);
+        submit1 = (Button) findViewById(R.id.button);
 
-        if (android.os.Build.VERSION.SDK_INT >= 21)
-        {
+        if (android.os.Build.VERSION.SDK_INT >= 21) {
             Window statusBar = getWindow();
             statusBar.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             statusBar.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -58,8 +60,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
         actionar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#DB1400")));
         submit1.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 attemptRegistration();
             }
         });
@@ -76,15 +77,15 @@ public class ChangePasswordActivity extends AppCompatActivity {
         old_pass.setError(null);
 
         // Store values at the time of the login attempt.
-        String email_g =email.getText().toString();
+        String email_g = email.getText().toString();
         String newpassword = new_pass.getText().toString();
-        String oldpassword=old_pass.getText().toString();
+        String oldpassword = old_pass.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
 
         // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(oldpassword) && !isPasswordValid(oldpassword)) {
+        if (!TextUtils.isEmpty(oldpassword) && oldpassword.length() > 4) {
             old_pass.setError(getString(R.string.error_invalid_password));
             focusView = old_pass;
             cancel = true;
@@ -115,7 +116,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
 
-            mAuthTask = new UserLoginTask(email_g, newpassword,oldpassword);
+            mAuthTask = new UserLoginTask(email_g, newpassword, oldpassword);
             mAuthTask.execute("https://aarzucompact.herokuapp.com/ChangePasswordStudentServlet?semail=");
         }
     }
@@ -126,24 +127,27 @@ public class ChangePasswordActivity extends AppCompatActivity {
     }
 
     private boolean isPasswordValid(String password) {
-        //TODO: Replace this with your own logic
-        return password.length() > 4;
+        Pattern pattern;
+        Matcher matcher;
+        final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{4,}$";
+        pattern = Pattern.compile(PASSWORD_PATTERN);
+        matcher = pattern.matcher(password);
+
+        return matcher.matches();
     }
 
     public class UserLoginTask extends AsyncTask<String, Void, String> {
 
         private final String mEmail;
-        private final String mPassword,mOldPassward;
+        private final String mPassword, mOldPassward;
 
 
-        UserLoginTask(String email, String password,String oldpassword)
-        {
+        UserLoginTask(String email, String password, String oldpassword) {
             mEmail = email;
             mPassword = password;
-            mOldPassward=oldpassword;
+            mOldPassward = oldpassword;
 
         }
-
 
 
         @Override
@@ -152,24 +156,11 @@ public class ChangePasswordActivity extends AppCompatActivity {
 
             try {
                 // Simulate network access.
-                Thread.sleep(2000);
+                Log.e("123456789", params[0] + mEmail + "&spassword=" + mOldPassward + "&npassword=" + mPassword);
 
-            }
-
-            catch (InterruptedException e)
-            {
-                Log.e("12345101010","456789");
-                return e.getMessage();
-            }
-            Log.e("123456",""+getOutputFromUrl(params[0]+mEmail+"&spassword="+mOldPassward+"&npassword="+mPassword));
-            Log.e("123456789",params[0]+mEmail+"&spassword="+mOldPassward+"&npassword="+mPassword);
-            try
-            {
-                return getOutputFromUrl(params[0]+URLEncoder.encode(mEmail, "UTF-8")+"&spassword="+URLEncoder.encode(mOldPassward, "UTF-8")+"&npassword="+URLEncoder.encode(mPassword, "UTF-8"));
-            }
-            catch (IOException e)
-            {
-                Log.e("err",e.getMessage());
+                return getOutputFromUrl(params[0].trim() + URLEncoder.encode(mEmail, "UTF-8") + "&spassword=" + URLEncoder.encode(mOldPassward, "UTF-8") + "&npassword=" + URLEncoder.encode(mPassword, "UTF-8"));
+            } catch (IOException e) {
+                Log.e("err", e.getMessage());
                 return null;
             }
 
@@ -185,7 +176,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
                 HttpEntity httpEntity = httpResponse.getEntity();
                 output = EntityUtils.toString(httpEntity);
 
-                Log.e("1233211111",""+output);
+                Log.e("1233211111", "" + output);
 
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
@@ -194,7 +185,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            Log.e("123321",output);
+            Log.e("123321", output);
             return output;
         }
 
@@ -203,7 +194,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
             mAuthTask = null;
 
 
-            Log.e("123456789beforeif",output);
+            Log.e("123456789beforeif", output);
             if (output.trim().equals("success")) {
                 final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ChangePasswordActivity.this);
 
@@ -214,11 +205,11 @@ public class ChangePasswordActivity extends AppCompatActivity {
                 alertDialogBuilder
                         .setMessage("Your Password is Changed.")
                         .setCancelable(false)
-                        .setPositiveButton("Login",new DialogInterface.OnClickListener() {
+                        .setPositiveButton("Login", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 // if this button is clicked, close
                                 // current activity
-                                Intent login=new Intent(ChangePasswordActivity.this, LoginActivity.class);
+                                Intent login = new Intent(ChangePasswordActivity.this, LoginActivity.class);
                                 startActivity(login);
                                 dialog.dismiss();
                             }
@@ -229,13 +220,9 @@ public class ChangePasswordActivity extends AppCompatActivity {
                 // show it
                 alertDialog.show();
 
-            }
+            } else {
 
-
-            else
-            {
-
-                Toast.makeText(ChangePasswordActivity.this,"Password Incorrect",Toast.LENGTH_LONG).show();
+                Toast.makeText(ChangePasswordActivity.this, "Password Incorrect", Toast.LENGTH_LONG).show();
                 old_pass.setError(getString(R.string.error_incorrect_password));
                 old_pass.requestFocus();
             }

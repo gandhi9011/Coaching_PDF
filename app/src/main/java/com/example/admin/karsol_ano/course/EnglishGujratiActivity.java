@@ -22,11 +22,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.admin.karsol_ano.MenuItems.ForgotPasswordActivity;
 import com.example.admin.karsol_ano.LoginModule.LoginActivity;
 import com.example.admin.karsol_ano.MenuItems.AboutUsActivity;
 import com.example.admin.karsol_ano.MenuItems.ContactUsActivity;
 import com.example.admin.karsol_ano.MenuItems.Developed_Activity;
+import com.example.admin.karsol_ano.MenuItems.ForgotPasswordActivity;
 import com.example.admin.karsol_ano.MenuItems.PriceActivity;
 import com.example.admin.karsol_ano.PdfrenderActivity;
 import com.example.admin.karsol_ano.R;
@@ -42,11 +42,10 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 public class EnglishGujratiActivity extends AppCompatActivity {
-    TextView tv1,tv2;
-    LinearLayout english,gujrati;
-    String Course="",CoursePart="";
     private static PowerManager.WakeLock mWakeLock;
-
+    TextView tv1, tv2;
+    LinearLayout english, gujrati;
+    String Course = "", CoursePart = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,123 +64,61 @@ public class EnglishGujratiActivity extends AppCompatActivity {
 
 // instantiate it within the onCreate method
 
-        tv1=(TextView)findViewById(R.id.engtv1);
-        tv2=(TextView)findViewById(R.id.gujtv2);
-        english=(LinearLayout)findViewById(R.id.english);
-        gujrati=(LinearLayout)findViewById(R.id.gujrati);
+        tv1 = (TextView) findViewById(R.id.engtv1);
+        tv2 = (TextView) findViewById(R.id.gujtv2);
+        english = (LinearLayout) findViewById(R.id.english);
+        gujrati = (LinearLayout) findViewById(R.id.gujrati);
 
-        Bundle b=getIntent().getExtras();
-        CoursePart=b.getString("BtnValue");
-        if(CoursePart.equals("BASIC1") || CoursePart.equals("BASIC2") || CoursePart.equals("BASIC3"))
-        {
-            Course="BASIC";
+        Bundle b = getIntent().getExtras();
+        CoursePart = b.getString("BtnValue");
+        if (CoursePart.equals("BASIC1") || CoursePart.equals("BASIC2") || CoursePart.equals("BASIC3")) {
+            Course = "BASIC";
         }
 
-        if(CoursePart.equals("COMPANY1") || CoursePart.equals("COMPANY2"))
-        {
-            Course="COMPANY";
+        if (CoursePart.equals("COMPANY1") || CoursePart.equals("COMPANY2")) {
+            Course = "COMPANY";
         }
 
-        if(CoursePart.equals("PARTNERSHIP1") || CoursePart.equals("PARTNERSHIP2") )
-        {
-            Course="PARTNERSHIP";
+        if (CoursePart.equals("PARTNERSHIP1") || CoursePart.equals("PARTNERSHIP2")) {
+            Course = "PARTNERSHIP";
         }
-        Toast.makeText(this,CoursePart+""+Course,Toast.LENGTH_LONG).show();
-
+        Toast.makeText(this, CoursePart + "" + Course, Toast.LENGTH_LONG).show();
 
 
         english.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
-            {
+            public void onClick(View view) {
                 SharedPreferences sharedpreferences = getSharedPreferences("PDFStructure", Context.MODE_PRIVATE);
-                final SharedPreferences.Editor editor=sharedpreferences.edit();
-                editor.putString("Course",Course);
-                editor.putString("CoursePart",CoursePart);
-                editor.putString("Language","ENGLISH");
+                final SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putString("Course", Course);
+                editor.putString("CoursePart", CoursePart);
+                editor.putString("Language", "ENGLISH");
                 editor.commit();
-                GetXMLTask downloadpdf=new GetXMLTask();
-                downloadpdf.execute("https://aarzucompact.herokuapp.com/GetCourseUrlServlet?course="+Course+"&coursepart="+CoursePart+"&language=ENGLISH");
+                GetXMLTask downloadpdf = new GetXMLTask();
+                downloadpdf.execute("https://aarzucompact.herokuapp.com/GetCourseUrlServlet?course=" + Course + "&coursepart=" + CoursePart + "&language=ENGLISH");
 
             }
         });
-
 
 
         gujrati.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
-            {
+            public void onClick(View view) {
                 SharedPreferences sharedpreferences = getSharedPreferences("PDFStructure", Context.MODE_PRIVATE);
-                final SharedPreferences.Editor editor=sharedpreferences.edit();
-                editor.putString("Course",Course);
-                editor.putString("CoursePart",CoursePart);
-                editor.putString("Language","GUJRATI");
+                final SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putString("Course", Course);
+                editor.putString("CoursePart", CoursePart);
+                editor.putString("Language", "GUJRATI");
                 editor.commit();
 
-                GetXMLTask downloadpdf=new GetXMLTask();
-                downloadpdf.execute("https://aarzucompact.herokuapp.com/GetCourseUrlServlet?course="+Course+"&coursepart="+CoursePart+"&language=GUJRATI");
+                GetXMLTask downloadpdf = new GetXMLTask();
+                downloadpdf.execute("https://aarzucompact.herokuapp.com/GetCourseUrlServlet?course=" + Course + "&coursepart=" + CoursePart + "&language=GUJRATI");
 
             }
         });
 
 
-
-
     }
-
-
-
-    private class GetXMLTask extends AsyncTask<String, Void, String> {
-        @Override
-        protected String doInBackground(String... urls) {
-            String output = null;
-
-                output = getOutputFromUrl(urls[0]);
-                Log.e("",urls[0]+""+output);
-
-            return output;
-        }
-
-        private String getOutputFromUrl(String url) {
-            String output = null;
-            try {
-                DefaultHttpClient httpClient = new DefaultHttpClient();
-                HttpGet httpGet = new HttpGet(url);
-
-                HttpResponse httpResponse = httpClient.execute(httpGet);
-                HttpEntity httpEntity = httpResponse.getEntity();
-                output = EntityUtils.toString(httpEntity);
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            } catch (ClientProtocolException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return output;
-        }
-
-        @Override
-        protected void onPostExecute(String output) {
-            if (output.trim().equals("error"))
-            {
-                Toast.makeText(EnglishGujratiActivity.this,"PDF Not Available",Toast.LENGTH_LONG).show();
-
-            }
-            else
-            {
-                //Toast.makeText(EnglishGujratiActivity.this,output,Toast.LENGTH_LONG).show();
-                Intent pdfview=new Intent(EnglishGujratiActivity.this,PdfrenderActivity.class);
-                pdfview.putExtra("Link",output.trim());
-                startActivity(pdfview);
-            }
-        }
-    }
-
-
-
-
 
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -216,12 +153,54 @@ public class EnglishGujratiActivity extends AppCompatActivity {
                 return true;
 
 
-
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
+    private class GetXMLTask extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... urls) {
+            String output = null;
+
+            output = getOutputFromUrl(urls[0]);
+            Log.e("", urls[0] + "" + output);
+
+            return output;
+        }
+
+        private String getOutputFromUrl(String url) {
+            String output = null;
+            try {
+                DefaultHttpClient httpClient = new DefaultHttpClient();
+                HttpGet httpGet = new HttpGet(url);
+
+                HttpResponse httpResponse = httpClient.execute(httpGet);
+                HttpEntity httpEntity = httpResponse.getEntity();
+                output = EntityUtils.toString(httpEntity);
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            } catch (ClientProtocolException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return output;
+        }
+
+        @Override
+        protected void onPostExecute(String output) {
+            if (output.trim().equals("error")) {
+                Toast.makeText(EnglishGujratiActivity.this, "PDF Coming Soon", Toast.LENGTH_LONG).show();
+
+            } else {
+                //Toast.makeText(EnglishGujratiActivity.this,output,Toast.LENGTH_LONG).show();
+                Intent pdfview = new Intent(EnglishGujratiActivity.this, PdfrenderActivity.class);
+                pdfview.putExtra("Link", output.trim());
+                startActivity(pdfview);
+            }
+        }
+    }
 
 
 }

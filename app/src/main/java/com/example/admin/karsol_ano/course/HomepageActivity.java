@@ -16,17 +16,17 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.admin.karsol_ano.MenuItems.ForgotPasswordActivity;
 import com.example.admin.karsol_ano.LoginModule.LoginActivity;
 import com.example.admin.karsol_ano.MenuItems.AboutUsActivity;
 import com.example.admin.karsol_ano.MenuItems.ContactUsActivity;
 import com.example.admin.karsol_ano.MenuItems.Developed_Activity;
+import com.example.admin.karsol_ano.MenuItems.ForgotPasswordActivity;
 import com.example.admin.karsol_ano.MenuItems.PriceActivity;
 import com.example.admin.karsol_ano.R;
 
 public class HomepageActivity extends AppCompatActivity {
-LinearLayout basic,company,partnership;
-TextView  tvbasic,tvcompany,tvpartnership;
+    LinearLayout basic, company, partnership;
+    TextView tvbasic, tvcompany, tvpartnership;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,26 +41,24 @@ TextView  tvbasic,tvcompany,tvpartnership;
         final ActionBar actionar = getSupportActionBar();
         actionar.setTitle("HOME");
         actionar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#DB1400")));
-        basic=(LinearLayout)findViewById(R.id.basic);
-        company=(LinearLayout)findViewById(R.id.company);
-        partnership=(LinearLayout)findViewById(R.id.partnership);
-        tvbasic=(TextView)findViewById(R.id.basictv);
-        tvcompany=(TextView)findViewById(R.id.companytv);
-        tvpartnership=(TextView)findViewById(R.id.partnershiptv);
+        basic = (LinearLayout) findViewById(R.id.basic);
+        company = (LinearLayout) findViewById(R.id.company);
+        partnership = (LinearLayout) findViewById(R.id.partnership);
+        tvbasic = (TextView) findViewById(R.id.basictv);
+        tvcompany = (TextView) findViewById(R.id.companytv);
+        tvpartnership = (TextView) findViewById(R.id.partnershiptv);
         basic.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
-            {
-                Intent basic=new Intent(HomepageActivity.this,BasicActivity.class);
+            public void onClick(View view) {
+                Intent basic = new Intent(HomepageActivity.this, BasicActivity.class);
                 startActivity(basic);
             }
         });
 
         company.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
-            {
-                Intent company=new Intent(HomepageActivity.this,CompanyActivity.class);
+            public void onClick(View view) {
+                Intent company = new Intent(HomepageActivity.this, CompanyActivity.class);
                 startActivity(company);
             }
         });
@@ -68,9 +66,8 @@ TextView  tvbasic,tvcompany,tvpartnership;
 
         partnership.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
-            {
-                Intent partnership=new Intent(HomepageActivity.this,PartnershipActivity.class);
+            public void onClick(View view) {
+                Intent partnership = new Intent(HomepageActivity.this, PartnershipActivity.class);
                 startActivity(partnership);
             }
         });

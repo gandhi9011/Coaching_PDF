@@ -15,6 +15,7 @@ import com.example.admin.karsol_ano.R;
 public class Developed_Activity extends AppCompatActivity {
 
     WebView webView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

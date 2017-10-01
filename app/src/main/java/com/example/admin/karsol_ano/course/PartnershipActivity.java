@@ -16,17 +16,18 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.admin.karsol_ano.MenuItems.ForgotPasswordActivity;
 import com.example.admin.karsol_ano.LoginModule.LoginActivity;
 import com.example.admin.karsol_ano.MenuItems.AboutUsActivity;
 import com.example.admin.karsol_ano.MenuItems.ContactUsActivity;
 import com.example.admin.karsol_ano.MenuItems.Developed_Activity;
+import com.example.admin.karsol_ano.MenuItems.ForgotPasswordActivity;
 import com.example.admin.karsol_ano.MenuItems.PriceActivity;
 import com.example.admin.karsol_ano.R;
 
 public class PartnershipActivity extends AppCompatActivity {
-    LinearLayout partnership1,partnership2;
-    TextView tvpartnership1,tvpartnership2;
+    LinearLayout partnership1, partnership2;
+    TextView tvpartnership1, tvpartnership2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,30 +41,27 @@ public class PartnershipActivity extends AppCompatActivity {
         final ActionBar actionar = getSupportActionBar();
         actionar.setTitle("PARTNERSHIP");
         actionar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#DB1400")));
-        partnership1=(LinearLayout)findViewById(R.id.partnership1);
-        partnership2=(LinearLayout)findViewById(R.id.partnership2);
-        tvpartnership1=(TextView)findViewById(R.id.partnershiptv1);
-        tvpartnership2=(TextView)findViewById(R.id.partnershiptv2);
+        partnership1 = (LinearLayout) findViewById(R.id.partnership1);
+        partnership2 = (LinearLayout) findViewById(R.id.partnership2);
+        tvpartnership1 = (TextView) findViewById(R.id.partnershiptv1);
+        tvpartnership2 = (TextView) findViewById(R.id.partnershiptv2);
         partnership1.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
-            {
-                Intent partnership_i=new Intent(PartnershipActivity.this,EnglishGujratiActivity.class);
-                partnership_i.putExtra("BtnValue","PARTNERSHIP1");
+            public void onClick(View view) {
+                Intent partnership_i = new Intent(PartnershipActivity.this, EnglishGujratiActivity.class);
+                partnership_i.putExtra("BtnValue", "PARTNERSHIP1");
                 startActivity(partnership_i);
             }
         });
 
         partnership2.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
-            {
-                Intent partnership_i=new Intent(PartnershipActivity.this,EnglishGujratiActivity.class);
-                partnership_i.putExtra("BtnValue","PARTNERSHIP2");
+            public void onClick(View view) {
+                Intent partnership_i = new Intent(PartnershipActivity.this, EnglishGujratiActivity.class);
+                partnership_i.putExtra("BtnValue", "PARTNERSHIP2");
                 startActivity(partnership_i);
             }
         });
-
 
 
     }
@@ -99,7 +97,6 @@ public class PartnershipActivity extends AppCompatActivity {
             case R.id.action_changepass:
                 startActivity(new Intent(this, ForgotPasswordActivity.class));
                 return true;
-
 
 
             default:

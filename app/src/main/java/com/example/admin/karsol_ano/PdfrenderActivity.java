@@ -136,8 +136,9 @@ public class PdfrenderActivity extends AppCompatActivity {
     public void onStop() {
         try {
 
-            closeRenderer();
+
             super.onStop();
+            closeRenderer();
         }
         catch (Exception e)
         {Toast.makeText(PdfrenderActivity.this,e.getMessage(),Toast.LENGTH_LONG).show();}
@@ -156,7 +157,7 @@ public class PdfrenderActivity extends AppCompatActivity {
      */
     private void openRenderer() throws IOException {
         // In this sample, we read a PDF from the assets directory.
-        File file = new File(getCacheDir(), "/aarzu/"+PDFFILENAME);
+        File file = new File(getExternalCacheDir(), "/aarzu/"+PDFFILENAME);
         if (!file.exists()) {
 
             new DownloadFile().execute(URL_LINK+"1");
@@ -274,7 +275,7 @@ public class PdfrenderActivity extends AppCompatActivity {
                 int fileLength = connection.getContentLength();
 
                 // Locate storage location
-                String extStorageDirectory = getCacheDir().toString();
+                String extStorageDirectory = getExternalCacheDir().toString();
                 File folder = new File(extStorageDirectory, "aarzu");
                 folder.mkdir();
                 File pdfFile = new File(folder, PDFFILENAME);
@@ -334,5 +335,3 @@ public class PdfrenderActivity extends AppCompatActivity {
 
     }
 }
-
-

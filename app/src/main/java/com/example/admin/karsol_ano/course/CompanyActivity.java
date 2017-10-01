@@ -16,17 +16,18 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.admin.karsol_ano.MenuItems.ForgotPasswordActivity;
 import com.example.admin.karsol_ano.LoginModule.LoginActivity;
 import com.example.admin.karsol_ano.MenuItems.AboutUsActivity;
 import com.example.admin.karsol_ano.MenuItems.ContactUsActivity;
 import com.example.admin.karsol_ano.MenuItems.Developed_Activity;
+import com.example.admin.karsol_ano.MenuItems.ForgotPasswordActivity;
 import com.example.admin.karsol_ano.MenuItems.PriceActivity;
 import com.example.admin.karsol_ano.R;
 
 public class CompanyActivity extends AppCompatActivity {
-    LinearLayout company1,company2;
-    TextView tvcompany1,tvcompany2;
+    LinearLayout company1, company2;
+    TextView tvcompany1, tvcompany2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,26 +41,24 @@ public class CompanyActivity extends AppCompatActivity {
         final ActionBar actionar = getSupportActionBar();
         actionar.setTitle("COMPANY");
         actionar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#DB1400")));
-        company1=(LinearLayout)findViewById(R.id.company1);
-        company2=(LinearLayout)findViewById(R.id.company2);
-        tvcompany1=(TextView)findViewById(R.id.companytv1);
-        tvcompany2=(TextView)findViewById(R.id.companytv2);
+        company1 = (LinearLayout) findViewById(R.id.company1);
+        company2 = (LinearLayout) findViewById(R.id.company2);
+        tvcompany1 = (TextView) findViewById(R.id.companytv1);
+        tvcompany2 = (TextView) findViewById(R.id.companytv2);
         company1.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
-            {
-                Intent company_i=new Intent(CompanyActivity.this,EnglishGujratiActivity.class);
-                company_i.putExtra("BtnValue","COMPANY1");
+            public void onClick(View view) {
+                Intent company_i = new Intent(CompanyActivity.this, EnglishGujratiActivity.class);
+                company_i.putExtra("BtnValue", "COMPANY1");
                 startActivity(company_i);
             }
         });
 
         company2.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
-            {
-                Intent company_i=new Intent(CompanyActivity.this,EnglishGujratiActivity.class);
-                company_i.putExtra("BtnValue","COMPANY2");
+            public void onClick(View view) {
+                Intent company_i = new Intent(CompanyActivity.this, EnglishGujratiActivity.class);
+                company_i.putExtra("BtnValue", "COMPANY2");
                 startActivity(company_i);
             }
         });

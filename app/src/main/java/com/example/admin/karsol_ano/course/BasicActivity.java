@@ -16,17 +16,18 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.admin.karsol_ano.MenuItems.ForgotPasswordActivity;
 import com.example.admin.karsol_ano.LoginModule.LoginActivity;
 import com.example.admin.karsol_ano.MenuItems.AboutUsActivity;
 import com.example.admin.karsol_ano.MenuItems.ContactUsActivity;
 import com.example.admin.karsol_ano.MenuItems.Developed_Activity;
+import com.example.admin.karsol_ano.MenuItems.ForgotPasswordActivity;
 import com.example.admin.karsol_ano.MenuItems.PriceActivity;
 import com.example.admin.karsol_ano.R;
 
 public class BasicActivity extends AppCompatActivity {
-    LinearLayout basic1,basic2,basic3;
-    TextView tvbasic1,tvbasic2,tvbasic3;
+    LinearLayout basic1, basic2, basic3;
+    TextView tvbasic1, tvbasic2, tvbasic3;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,18 +41,17 @@ public class BasicActivity extends AppCompatActivity {
         final ActionBar actionar = getSupportActionBar();
         actionar.setTitle("BASIC");
         actionar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#DB1400")));
-        basic1=(LinearLayout)findViewById(R.id.basic1);
-        basic2=(LinearLayout)findViewById(R.id.basic2);
-        basic3=(LinearLayout)findViewById(R.id.basic3);
-        tvbasic1=(TextView)findViewById(R.id.basictv1);
-        tvbasic2=(TextView)findViewById(R.id.basictv2);
-        tvbasic3=(TextView)findViewById(R.id.basictv3);
+        basic1 = (LinearLayout) findViewById(R.id.basic1);
+        basic2 = (LinearLayout) findViewById(R.id.basic2);
+        basic3 = (LinearLayout) findViewById(R.id.basic3);
+        tvbasic1 = (TextView) findViewById(R.id.basictv1);
+        tvbasic2 = (TextView) findViewById(R.id.basictv2);
+        tvbasic3 = (TextView) findViewById(R.id.basictv3);
         basic1.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
-            {
-                Intent basic_i=new Intent(BasicActivity.this,EnglishGujratiActivity.class);
-                basic_i.putExtra("BtnValue","BASIC1");
+            public void onClick(View view) {
+                Intent basic_i = new Intent(BasicActivity.this, EnglishGujratiActivity.class);
+                basic_i.putExtra("BtnValue", "BASIC1");
                 startActivity(basic_i);
 
             }
@@ -59,10 +59,9 @@ public class BasicActivity extends AppCompatActivity {
 
         basic2.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
-            {
-                Intent basic_i=new Intent(BasicActivity.this,EnglishGujratiActivity.class);
-                basic_i.putExtra("BtnValue","BASIC2");
+            public void onClick(View view) {
+                Intent basic_i = new Intent(BasicActivity.this, EnglishGujratiActivity.class);
+                basic_i.putExtra("BtnValue", "BASIC2");
                 startActivity(basic_i);
             }
         });
@@ -70,10 +69,9 @@ public class BasicActivity extends AppCompatActivity {
 
         basic3.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
-            {
-                Intent basic_i=new Intent(BasicActivity.this,EnglishGujratiActivity.class);
-                basic_i.putExtra("BtnValue","BASIC3");
+            public void onClick(View view) {
+                Intent basic_i = new Intent(BasicActivity.this, EnglishGujratiActivity.class);
+                basic_i.putExtra("BtnValue", "BASIC3");
                 startActivity(basic_i);
             }
         });
@@ -111,7 +109,6 @@ public class BasicActivity extends AppCompatActivity {
             case R.id.action_changepass:
                 startActivity(new Intent(this, ForgotPasswordActivity.class));
                 return true;
-
 
 
             default:
