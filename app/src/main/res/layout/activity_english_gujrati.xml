@@ -10,11 +10,10 @@
     android:weightSum="1">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/imageVieweg"
         android:layout_width="384dp"
         android:layout_height="229dp"
-        android:layout_weight="0.04"
-        app:srcCompat="@drawable/aarzu" />
+        android:layout_weight="0.04" />
 
     <LinearLayout
         android:id="@+id/english"

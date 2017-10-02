@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,6 +45,7 @@ import java.io.UnsupportedEncodingException;
 public class EnglishGujratiActivity extends AppCompatActivity {
     private static PowerManager.WakeLock mWakeLock;
     TextView tv1, tv2;
+    ImageView egiv;
     LinearLayout english, gujrati;
     String Course = "", CoursePart = "";
 
@@ -66,21 +68,51 @@ public class EnglishGujratiActivity extends AppCompatActivity {
 
         tv1 = (TextView) findViewById(R.id.engtv1);
         tv2 = (TextView) findViewById(R.id.gujtv2);
+        egiv=(ImageView)findViewById(R.id.imageVieweg);
         english = (LinearLayout) findViewById(R.id.english);
         gujrati = (LinearLayout) findViewById(R.id.gujrati);
 
         Bundle b = getIntent().getExtras();
         CoursePart = b.getString("BtnValue");
         if (CoursePart.equals("BASIC1") || CoursePart.equals("BASIC2") || CoursePart.equals("BASIC3")) {
+
             Course = "BASIC";
+            if (CoursePart.equals("BASIC1"))
+            {
+                egiv.setImageDrawable(getResources().getDrawable(R.drawable.basic11));
+            }
+            else  if (CoursePart.equals("BASIC2"))
+            {
+                egiv.setImageDrawable(getResources().getDrawable(R.drawable.basic22));
+            }
+            else  if (CoursePart.equals("BASIC3"))
+            {
+                egiv.setImageDrawable(getResources().getDrawable(R.drawable.basic33));
+            }
         }
 
         if (CoursePart.equals("COMPANY1") || CoursePart.equals("COMPANY2")) {
             Course = "COMPANY";
+            if (CoursePart.equals("COMPANY1"))
+            {
+                egiv.setImageDrawable(getResources().getDrawable(R.drawable.company_11));
+            }
+            else  if (CoursePart.equals("COMPANY2"))
+            {
+                egiv.setImageDrawable(getResources().getDrawable(R.drawable.company_22));
+            }
         }
 
         if (CoursePart.equals("PARTNERSHIP1") || CoursePart.equals("PARTNERSHIP2")) {
             Course = "PARTNERSHIP";
+            if (CoursePart.equals("PARTNERSHIP1"))
+            {
+                egiv.setImageDrawable(getResources().getDrawable(R.drawable.partnership_11));
+            }
+            else  if (CoursePart.equals("PARTNERSHIP2"))
+            {
+                egiv.setImageDrawable(getResources().getDrawable(R.drawable.partnership_22));
+            }
         }
         Toast.makeText(this, CoursePart + "" + Course, Toast.LENGTH_LONG).show();
 

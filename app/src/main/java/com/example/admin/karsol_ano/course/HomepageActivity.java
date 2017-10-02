@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -39,8 +40,11 @@ public class HomepageActivity extends AppCompatActivity {
             statusBar.setStatusBarColor(ContextCompat.getColor(this, R.color.appbar));
         }
         final ActionBar actionar = getSupportActionBar();
-        actionar.setTitle("HOME");
-        actionar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#DB1400")));
+        LayoutInflater inflator = LayoutInflater.from(this);
+        View v = inflator.inflate(R.layout.titleview, null);
+        ((TextView)v.findViewById(R.id.title)).setText(this.getTitle());
+        actionar.setCustomView(v);
+        actionar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ffaa66cc")));
         basic = (LinearLayout) findViewById(R.id.basic);
         company = (LinearLayout) findViewById(R.id.company);
         partnership = (LinearLayout) findViewById(R.id.partnership);
