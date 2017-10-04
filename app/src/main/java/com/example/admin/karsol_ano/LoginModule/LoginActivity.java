@@ -6,6 +6,7 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
@@ -13,7 +14,6 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -35,11 +35,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.daimajia.slider.library.Animations.DescriptionAnimation;
-import com.daimajia.slider.library.SliderLayout;
-import com.daimajia.slider.library.SliderTypes.BaseSliderView;
-import com.daimajia.slider.library.SliderTypes.TextSliderView;
-import com.daimajia.slider.library.Tricks.ViewPagerEx;
 import com.example.admin.karsol_ano.MenuItems.AboutUsActivity;
 import com.example.admin.karsol_ano.MenuItems.ContactUsActivity;
 import com.example.admin.karsol_ano.MenuItems.Developed_Activity;
@@ -57,26 +52,15 @@ import org.apache.http.util.EntityUtils;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * A login screen that offers login via email/password.
  */
-public class LoginActivity extends AppCompatActivity implements BaseSliderView.OnSliderClickListener,ViewPagerEx.OnPageChangeListener
-{
+public class LoginActivity extends AppCompatActivity {
 
     public static final String LOGIN_URL = "https://aarzucompact.herokuapp.com/loginStudentServlet?semail=";
     public static final String REGISTRATION_URL = "https://aarzucompact.herokuapp.com/StudentInsertServlet?semail=";
     public static final String ForgotPassword_URL = "https://aarzucompact.herokuapp.com/StudentForgotPassword?semail=";
-    private static ViewPager mPager;
-    private static int currentPage = 0;
-    String url="https://www.dropbox.com/s/fwl1omf6e5nrwop/rsz_company_11.jpgkarsolhttps://www.dropbox.com/s/6cloyyg3xnpr3is/rsz_basic22.jpgkarsolhttps://www.dropbox.com/s/czyfna966uduh18/partnership_11.jpg";
-    String[] urls=url.split("karsol");
-    SliderLayout sliderLayout;
-    HashMap<String,String> Hash_file_maps ;
-    private static final Integer[] AARZU= {R.drawable.aarzu,R.drawable.basic,R.drawable.basic11,R.drawable.company_11,R.drawable.partnership_11};
-    private ArrayList<Integer> AARZUArray = new ArrayList<Integer>();
 
     /**
      * Id to identity READ_CONTACTS permission request.
@@ -105,35 +89,7 @@ public class LoginActivity extends AppCompatActivity implements BaseSliderView.O
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        //init();
-        /*---------------SLIDER CODE-----------------*/
-        Hash_file_maps = new HashMap<String, String>();
 
-        sliderLayout = (SliderLayout)findViewById(R.id.slider);
-        Log.e("urls",urls[0]+"123"+urls[1]+"123"+urls[2]);
-        Hash_file_maps.put("Aarzu Compact1", urls[0]);
-        Hash_file_maps.put("Aarzu Compact2", urls[1]);
-        Hash_file_maps.put("Aarzu Compact3", urls[2]);
-        for(String name : Hash_file_maps.keySet()){
-
-            TextSliderView textSliderView = new TextSliderView(LoginActivity.this);
-            textSliderView
-                    .description(name)
-                    .image(Hash_file_maps.get(name))
-                    .setScaleType(BaseSliderView.ScaleType.Fit)
-                    .setOnSliderClickListener(LoginActivity.this);
-            textSliderView.bundle(new Bundle());
-            textSliderView.getBundle()
-                    .putString("extra",name);
-            sliderLayout.addSlider(textSliderView);
-        }
-        sliderLayout.setPresetTransformer(SliderLayout.Transformer.Accordion);
-        sliderLayout.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
-        sliderLayout.setCustomAnimation(new DescriptionAnimation());
-        sliderLayout.setDuration(8000);
-        sliderLayout.addOnPageChangeListener(LoginActivity.this);
-
-         /*---------------SLIDER CODE----------------*/
 
         if(!isNetworkConnected())
         {
@@ -169,61 +125,60 @@ public class LoginActivity extends AppCompatActivity implements BaseSliderView.O
         }
         final ActionBar actionar = getSupportActionBar();
         actionar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#BB4E97")));
-        // Set up the login form.
-        mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
-        mPasswordView = (EditText) findViewById(R.id.password);
-        mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == R.id.login || id == EditorInfo.IME_NULL) {
-                    attemptLogin();
-                    return true;
+
+
+
+            // Set up the login form.
+            mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
+            mPasswordView = (EditText) findViewById(R.id.password);
+            mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+                @Override
+                public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
+                    if (id == R.id.login || id == EditorInfo.IME_NULL) {
+                        attemptLogin();
+                        return true;
+                    }
+                    return false;
                 }
-                return false;
-            }
-        });
+            });
 
-        Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
-        Button mEmailRegistrationButton = (Button) findViewById(R.id.email_registration_button);
-        TextView mForgotpassword = (TextView) findViewById(R.id.mforgotpass);
-        mEmailSignInButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
+            Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
+            Button mEmailRegistrationButton = (Button) findViewById(R.id.email_registration_button);
+            TextView mForgotpassword = (TextView) findViewById(R.id.mforgotpass);
+            mEmailSignInButton.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
 
-                attemptLogin();
+                    attemptLogin();
 
-            }
-        });
-        mEmailRegistrationButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                attemptRegistration();
-            }
-        });
-        mForgotpassword.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                attemptForgotPassword();
-            }
-        });
+                }
+            });
+            mEmailRegistrationButton.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    attemptRegistration();
+                }
+            });
+            mForgotpassword.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    attemptForgotPassword();
+                }
+            });
 
-        mLoginFormView = findViewById(R.id.login_form);
-        mProgressView = findViewById(R.id.login_progress);
+            mLoginFormView = findViewById(R.id.login_form);
+            mProgressView = findViewById(R.id.login_progress);
+
     }
 
-    protected void onStop()
-    {
 
-        sliderLayout.stopAutoCycle();
-
-        super.onStop();
-    }
     /**
      * Attempts to sign in or register the account specified by the login form.
      * If there are form errors (invalid email, missing fields, etc.), the
      * errors are presented and no actual login attempt is made.
      */
     private void attemptLogin() {
+        String email,password;
         if (mAuthTask != null) {
             return;
         }
@@ -232,10 +187,20 @@ public class LoginActivity extends AppCompatActivity implements BaseSliderView.O
         mEmailView.setError(null);
         mPasswordView.setError(null);
 
-        // Store values at the time of the login attempt.
-        String email = mEmailView.getText().toString();
-        String password = mPasswordView.getText().toString();
-
+//        SharedPreferences sp1=this.getSharedPreferences("Login", MODE_PRIVATE);
+//        String unm=sp1.getString("Unm", null);
+//        String pass = sp1.getString("Psw", null);
+//        if(!(unm.equals(null)) && !(pass.equals(null)) )
+//        {
+//            email=unm;
+//            password=pass;
+//        }
+//        else
+//            {
+            // Store values at the time of the login attempt.
+            email = mEmailView.getText().toString();
+            password = mPasswordView.getText().toString();
+//        }
         boolean cancel = false;
         View focusView = null;
 
@@ -476,23 +441,6 @@ public class LoginActivity extends AppCompatActivity implements BaseSliderView.O
         }
     }
 
-    @Override
-    public void onSliderClick(BaseSliderView baseSliderView)
-    {
-
-    }
-
-    @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
-
-    @Override
-    public void onPageSelected(int position) {
-
-        Log.d("Slider Demo", "Page Changed: " + position);
-    }
-
-    @Override
-    public void onPageScrollStateChanged(int state) {}
 
     public class UserLoginTask extends AsyncTask<String, Void, String> {
 
@@ -567,6 +515,11 @@ public class LoginActivity extends AppCompatActivity implements BaseSliderView.O
                Log.e("123456789", "" + output);
                if (output.trim().equals("success") && mx == 1) {
                    Log.e("123456789--in if", "" + output);
+                   SharedPreferences sp=getSharedPreferences("Login", MODE_PRIVATE);
+                   SharedPreferences.Editor Ed=sp.edit();
+                   Ed.putString("Unm",mEmail );
+                   Ed.putString("Psw",mPassword);
+                   Ed.commit();
                    Intent login = new Intent(LoginActivity.this, HomepageActivity.class);
                    startActivity(login);
 
@@ -646,32 +599,6 @@ public class LoginActivity extends AppCompatActivity implements BaseSliderView.O
 
         return cm.getActiveNetworkInfo() != null;
     }
-    private void init() {
-      /*  for(int i=0;i<AARZU.length;i++)
-            AARZUArray.add(AARZU[i]);
 
-        mPager = (ViewPager) findViewById(R.id.pager);
-        mPager.setAdapter(new SliderAdapter(LoginActivity.this,AARZUArray));
-        CircleIndicator indicator = (CircleIndicator) findViewById(R.id.indicator);
-        indicator.setViewPager(mPager);
-
-        // Auto start of viewpager
-        final Handler handler = new Handler();
-        final Runnable Update = new Runnable() {
-            public void run() {
-                if (currentPage == AARZU.length) {
-                    currentPage = 0;
-                }
-                mPager.setCurrentItem(currentPage++, true);
-            }
-        };
-        Timer swipeTimer = new Timer();
-        swipeTimer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                handler.post(Update);
-            }
-        }, 2500, 2500);*/
-    }
 }
 
