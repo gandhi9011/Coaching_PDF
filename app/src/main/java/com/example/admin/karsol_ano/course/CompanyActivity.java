@@ -40,7 +40,7 @@ public class CompanyActivity extends AppCompatActivity {
         }
         final ActionBar actionar = getSupportActionBar();
         actionar.setTitle("COMPANY");
-        actionar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#DB1400")));
+        actionar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#BB4E97")));
         company1 = (LinearLayout) findViewById(R.id.company1);
         company2 = (LinearLayout) findViewById(R.id.company2);
         tvcompany1 = (TextView) findViewById(R.id.companytv1);

@@ -51,7 +51,7 @@ public class AboutUsActivity extends AppCompatActivity implements View.OnTouchLi
         }
         final ActionBar actionar = getSupportActionBar();
         actionar.setTitle("About Us");
-        actionar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#DB1400")));
+        actionar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#BB4E97")));
         imageView = (ImageView) findViewById(R.id.imageViewabt);
         imageView.setOnTouchListener(this);
     }

@@ -40,7 +40,7 @@ public class BasicActivity extends AppCompatActivity {
         }
         final ActionBar actionar = getSupportActionBar();
         actionar.setTitle("BASIC");
-        actionar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#DB1400")));
+        actionar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#BB4E97")));
         basic1 = (LinearLayout) findViewById(R.id.basic1);
         basic2 = (LinearLayout) findViewById(R.id.basic2);
         basic3 = (LinearLayout) findViewById(R.id.basic3);

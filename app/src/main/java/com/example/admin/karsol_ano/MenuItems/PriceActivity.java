@@ -51,7 +51,7 @@ public class PriceActivity extends AppCompatActivity implements View.OnTouchList
         }
         final ActionBar actionar = getSupportActionBar();
         actionar.setTitle("About Us");
-        actionar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#DB1400")));
+        actionar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#BB4E97")));
         imageView = (ImageView) findViewById(R.id.imageViewprice);
         imageView.setOnTouchListener(this);
     }

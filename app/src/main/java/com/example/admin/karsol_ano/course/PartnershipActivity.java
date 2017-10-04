@@ -40,7 +40,7 @@ public class PartnershipActivity extends AppCompatActivity {
         }
         final ActionBar actionar = getSupportActionBar();
         actionar.setTitle("PARTNERSHIP");
-        actionar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#DB1400")));
+        actionar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#BB4E97")));
         partnership1 = (LinearLayout) findViewById(R.id.partnership1);
         partnership2 = (LinearLayout) findViewById(R.id.partnership2);
         tvpartnership1 = (TextView) findViewById(R.id.partnershiptv1);

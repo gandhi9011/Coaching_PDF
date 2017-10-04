@@ -120,7 +120,7 @@ public class LoginActivity extends AppCompatActivity {
             statusBar.setStatusBarColor(ContextCompat.getColor(this, R.color.appbar));
         }
         final ActionBar actionar = getSupportActionBar();
-        actionar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#DB1400")));
+        actionar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#BB4E97")));
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         mPasswordView = (EditText) findViewById(R.id.password);

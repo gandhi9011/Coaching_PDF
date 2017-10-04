@@ -55,7 +55,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         }
         final ActionBar actionar = getSupportActionBar();
                 actionar.setTitle("CHANGE PASSWORD");
-        actionar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#DB1400")));
+        actionar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#BB4E97")));
         submit1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)

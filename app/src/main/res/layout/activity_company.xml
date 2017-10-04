@@ -11,9 +11,8 @@
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="380dp"
-        android:layout_height="229dp"
-        app:srcCompat="@drawable/company"
-        android:layout_weight="0.30" />
+        android:layout_height="230dp"
+        app:srcCompat="@drawable/company" />
 
     <LinearLayout
         android:id="@+id/company1"

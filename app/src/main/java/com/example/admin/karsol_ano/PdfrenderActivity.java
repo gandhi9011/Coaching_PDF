@@ -63,7 +63,7 @@ public class PdfrenderActivity extends AppCompatActivity {
         }
         final ActionBar actionar = getSupportActionBar();
 
-        actionar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#DB1400")));
+        actionar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#BB4E97")));
         ImageView = (ImageView) findViewById(R.id.image);
         Previous = (Button) findViewById(R.id.previous);
         Next = (Button) findViewById(R.id.next);

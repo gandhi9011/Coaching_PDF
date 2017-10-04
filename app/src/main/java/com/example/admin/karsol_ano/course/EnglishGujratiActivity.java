@@ -45,8 +45,8 @@ import java.io.UnsupportedEncodingException;
 public class EnglishGujratiActivity extends AppCompatActivity {
     private static PowerManager.WakeLock mWakeLock;
     TextView tv1, tv2;
-    ImageView egiv;
     LinearLayout english, gujrati;
+    ImageView egiv;
     String Course = "", CoursePart = "";
 
     @Override
@@ -61,7 +61,7 @@ public class EnglishGujratiActivity extends AppCompatActivity {
         }
         final ActionBar actionar = getSupportActionBar();
         actionar.setTitle("LANGUAGE");
-        actionar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#DB1400")));
+        actionar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#BB4E97")));
 
 
 // instantiate it within the onCreate method
@@ -79,15 +79,18 @@ public class EnglishGujratiActivity extends AppCompatActivity {
             Course = "BASIC";
             if (CoursePart.equals("BASIC1"))
             {
-                egiv.setImageDrawable(getResources().getDrawable(R.drawable.basic11));
+                egiv.setImageResource(R.drawable.basic11);
+                Log.e("if condition","in basic1");
             }
             else  if (CoursePart.equals("BASIC2"))
             {
-                egiv.setImageDrawable(getResources().getDrawable(R.drawable.basic22));
+                egiv.setImageResource(R.drawable.basic22);
+                Log.e("if condition","in basic2");
             }
             else  if (CoursePart.equals("BASIC3"))
             {
-                egiv.setImageDrawable(getResources().getDrawable(R.drawable.basic33));
+                egiv.setImageResource(R.drawable.basic33);
+                Log.e("if condition","in basic3");
             }
         }
 
@@ -95,11 +98,13 @@ public class EnglishGujratiActivity extends AppCompatActivity {
             Course = "COMPANY";
             if (CoursePart.equals("COMPANY1"))
             {
-                egiv.setImageDrawable(getResources().getDrawable(R.drawable.company_11));
+                egiv.setImageResource(R.drawable.company_11);
+                Log.e("if condition","in company1");
             }
             else  if (CoursePart.equals("COMPANY2"))
             {
-                egiv.setImageDrawable(getResources().getDrawable(R.drawable.company_22));
+                egiv.setImageResource(R.drawable.company_22);
+                Log.e("if condition","in Company2");
             }
         }
 
@@ -107,11 +112,13 @@ public class EnglishGujratiActivity extends AppCompatActivity {
             Course = "PARTNERSHIP";
             if (CoursePart.equals("PARTNERSHIP1"))
             {
-                egiv.setImageDrawable(getResources().getDrawable(R.drawable.partnership_11));
+                egiv.setImageResource(R.drawable.partnership_11);
+                Log.e("if condition","in partnership1");
             }
             else  if (CoursePart.equals("PARTNERSHIP2"))
             {
-                egiv.setImageDrawable(getResources().getDrawable(R.drawable.partnership_22));
+                egiv.setImageResource(R.drawable.partnership_22);
+                Log.e("if condition","in partnership2");
             }
         }
         Toast.makeText(this, CoursePart + "" + Course, Toast.LENGTH_LONG).show();
@@ -140,11 +147,11 @@ public class EnglishGujratiActivity extends AppCompatActivity {
                 final SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putString("Course", Course);
                 editor.putString("CoursePart", CoursePart);
-                editor.putString("Language", "GUJRATI");
+                editor.putString("Language", "GUJARATI");
                 editor.commit();
 
                 GetXMLTask downloadpdf = new GetXMLTask();
-                downloadpdf.execute("https://aarzucompact.herokuapp.com/GetCourseUrlServlet?course=" + Course + "&coursepart=" + CoursePart + "&language=GUJRATI");
+                downloadpdf.execute("https://aarzucompact.herokuapp.com/GetCourseUrlServlet?course=" + Course + "&coursepart=" + CoursePart + "&language=GUJARATI");
 
             }
         });

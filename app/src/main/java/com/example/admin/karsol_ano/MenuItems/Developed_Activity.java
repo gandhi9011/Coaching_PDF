@@ -28,9 +28,9 @@ public class Developed_Activity extends AppCompatActivity {
         }
         final ActionBar actionar = getSupportActionBar();
         actionar.setTitle("Developed By");
-        actionar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#DB1400")));
-        webView = (WebView) findViewById(R.id.webView1);
-        webView.getSettings().setJavaScriptEnabled(true);
-        webView.loadUrl("http://www.archivessoftdesign.in");
+        actionar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#BB4E97")));
+//        webView = (WebView) findViewById(R.id.webView1);
+//        webView.getSettings().setJavaScriptEnabled(true);
+//        webView.loadUrl("http://www.archivessoftdesign.in");
     }
 }
