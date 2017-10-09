@@ -161,7 +161,6 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                 Log.e("12345101010","456789");
                 return e.getMessage();
             }
-            Log.e("123456",""+getOutputFromUrl(params[0]+mEmail+"&spassword="+mOldPassward+"&npassword="+mPassword));
             Log.e("123456789",params[0]+mEmail+"&spassword="+mOldPassward+"&npassword="+mPassword);
                 try
                 {

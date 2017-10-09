@@ -18,9 +18,9 @@ import android.widget.TextView;
 
 import com.example.admin.karsol_ano.LoginModule.LoginActivity;
 import com.example.admin.karsol_ano.MenuItems.AboutUsActivity;
+import com.example.admin.karsol_ano.MenuItems.ChangePasswordActivity;
 import com.example.admin.karsol_ano.MenuItems.ContactUsActivity;
 import com.example.admin.karsol_ano.MenuItems.Developed_Activity;
-import com.example.admin.karsol_ano.MenuItems.ForgotPasswordActivity;
 import com.example.admin.karsol_ano.MenuItems.PriceActivity;
 import com.example.admin.karsol_ano.R;
 
@@ -95,7 +95,7 @@ public class CompanyActivity extends AppCompatActivity {
                 startActivity(new Intent(this, LoginActivity.class));
                 return true;
             case R.id.action_changepass:
-                startActivity(new Intent(this, ForgotPasswordActivity.class));
+                startActivity(new Intent(this, ChangePasswordActivity.class));
                 return true;
 
 

@@ -188,7 +188,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(final String output) {
+        protected void onPostExecute(String output) {
             mAuthTask = null;
 
 
@@ -218,7 +218,9 @@ public class ChangePasswordActivity extends AppCompatActivity {
                 // show it
                 alertDialog.show();
 
-            } else {
+            }
+            else
+            {
 
                 Toast.makeText(ChangePasswordActivity.this, "Password Incorrect", Toast.LENGTH_LONG).show();
                 old_pass.setError(getString(R.string.error_incorrect_password));
