@@ -36,7 +36,7 @@
             android:layout_marginLeft="30dp"
             android:layout_marginTop="10dp"
             android:layout_weight="0.77"
-            android:textColor="@color/appbar"
+            android:textColor="@color/colorPrimary"
             android:textSize="24sp"
             android:textStyle="bold|italic"
             android:text="COMPANY-1" />
@@ -63,7 +63,7 @@
             android:layout_marginLeft="30dp"
             android:layout_marginTop="10dp"
             android:layout_weight="0.77"
-            android:textColor="@color/appbar"
+            android:textColor="#00008b"
             android:textSize="24sp"
             android:textStyle="bold|italic"
             android:text="COMPANY-2" />

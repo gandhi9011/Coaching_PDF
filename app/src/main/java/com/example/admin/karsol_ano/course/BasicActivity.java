@@ -21,6 +21,7 @@ import com.example.admin.karsol_ano.MenuItems.AboutUsActivity;
 import com.example.admin.karsol_ano.MenuItems.ChangePasswordActivity;
 import com.example.admin.karsol_ano.MenuItems.ContactUsActivity;
 import com.example.admin.karsol_ano.MenuItems.Developed_Activity;
+import com.example.admin.karsol_ano.MenuItems.ForgotPasswordActivity;
 import com.example.admin.karsol_ano.MenuItems.PriceActivity;
 import com.example.admin.karsol_ano.R;
 

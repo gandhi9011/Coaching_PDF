@@ -1,14 +1,19 @@
-
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:fbutton="http://schemas.android.com/apk/res-auto"
     android:gravity="center_horizontal"
     android:orientation="vertical"
     android:focusable="true"
     android:focusableInTouchMode="true"
+
+    android:weightSum="1"
+    android:paddingBottom="16dp"
+    android:paddingTop="16dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
     tools:context="com.example.admin.karsol_ano.LoginModule.LoginActivity">
 
 
@@ -18,8 +23,9 @@
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
-        android:layout_height="225dp"
-        app:srcCompat="@drawable/aarzu" />
+        android:layout_height="200dp"
+        android:layout_marginTop="7dp"
+        app:srcCompat="@drawable/aarzu_new" />
 
     <ProgressBar
         android:id="@+id/login_progress"
@@ -43,70 +49,121 @@
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                >
 
-                <AutoCompleteTextView
-                    android:id="@+id/email"
-                    android:layout_width="match_parent"
+                <com.github.florent37.materialtextfield.MaterialTextField
+                    android:layout_width="300dp"
                     android:layout_height="wrap_content"
-                    android:hint="@string/prompt_email"
-                    android:inputType="textEmailAddress"
-                    android:maxLines="1"
-                    android:singleLine="true" />
 
+                    android:layout_gravity="center"
+                    app:mtf_image="@drawable/email"
+                    app:mtf_labelColor="@color/colorPrimaryDark"
+                    app:mtf_backgroundColor="#ffc0cb">
+
+
+                    <EditText
+                        android:id="@+id/email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Email"
+                        android:textColor="#000000"
+                        android:inputType="textPersonName"></EditText>
+
+                </com.github.florent37.materialtextfield.MaterialTextField>
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <EditText
-                    android:id="@+id/password"
-                    android:layout_width="match_parent"
+                <com.github.florent37.materialtextfield.MaterialTextField
+                    android:layout_width="300dp"
                     android:layout_height="wrap_content"
-                    android:hint="@string/prompt_password"
-                    android:imeActionId="@+id/login"
-                    android:imeActionLabel="@string/action_sign_in_short"
-                    android:imeOptions="actionUnspecified"
-                    android:inputType="textPassword"
-                    android:maxLines="1"
-                    app:passwordToggleEnabled="true"
-                    android:textCursorDrawable="@drawable/curser_color"
-                    android:singleLine="true" />
+                    android:layout_gravity="center"
+
+                    app:mtf_image="@drawable/password"
+                    app:mtf_labelColor="@color/colorPrimaryDark"
+                    app:mtf_backgroundColor="#ffc0cb"
+                    android:id="@+id/txtuserp">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPassword"
+                        android:id="@+id/password"
+                        android:hint="Password"
+                        android:textColorHint="@color/colorPrimary"
+                        android:textColor="#000000"
+                        />
+
+                </com.github.florent37.materialtextfield.MaterialTextField>
+            </android.support.design.widget.TextInputLayout>
 
 
-                <Button
+            <com.balysv.materialripple.MaterialRippleLayout
                     android:id="@+id/email_sign_in_button"
-                    style="?android:textAppearanceSmall"
-                    android:layout_width="match_parent"
-                    android:layout_height="39dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_weight="1"
-                    android:text="@string/action_sign_in"
-                    android:textStyle="bold" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="150px"
+                    app:mrl_rippleOverlay="true"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp">
 
-                <Button
+                    <info.hoang8f.widget.FButton
+                        fbutton:buttonColor="@color/colorPrimary"
+                        fbutton:shadowColor="@color/colorPrimaryDark"
+                        fbutton:shadowEnabled="true"
+                        fbutton:shadowHeight="5dp"
+                        fbutton:cornerRadius="50dp"
+                        android:text="Sign In"
+                        android:textSize="20dp"
+                        android:layout_gravity="center"
+                        android:layout_width="300dp"
+                        android:layout_height="60dp"
+                        android:id="@+id/btnlogin"
+                        android:textStyle="bold"
+                        android:textColor="#FFFFFF" />
+                </com.balysv.materialripple.MaterialRippleLayout>
+
+                <com.balysv.materialripple.MaterialRippleLayout
                     android:id="@+id/email_registration_button"
-                    style="?android:textAppearanceSmall"
-                    android:layout_width="match_parent"
-                    android:layout_height="39dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_weight="1"
-                    android:text="@string/action_register"
-                    android:textStyle="bold" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="150px"
+                    app:mrl_rippleOverlay="true"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp">
+
+
+                    <info.hoang8f.widget.FButton
+                        fbutton:buttonColor="@color/colorPrimary"
+                        fbutton:shadowColor="@color/colorPrimaryDark"
+                        fbutton:shadowEnabled="true"
+                        fbutton:shadowHeight="5dp"
+                        fbutton:cornerRadius="50dp"
+
+                        android:text="register"
+                        android:textSize="20dp"
+                        android:layout_width="300dp"
+                        android:layout_gravity="center"
+                        android:layout_height="60dp"
+                        android:id="@+id/btnregister"
+                        android:textStyle="bold"
+                        android:textColor="#FFFFFF" />
+                </com.balysv.materialripple.MaterialRippleLayout>
 
                 <TextView
                     android:id="@+id/mforgotpass"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="10dp"
+
+
                     android:layout_weight="1"
                     android:text="Forgot Password ?"
+                    android:layout_gravity="center"
                     android:textColor="@color/colorPrimaryDark"
+                    android:textSize="20dp"
                     android:textStyle="bold" />
 
-            </android.support.design.widget.TextInputLayout>
 
 
         </LinearLayout>

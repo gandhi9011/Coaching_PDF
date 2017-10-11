@@ -42,8 +42,8 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change2_password);
         email=(EditText)findViewById(R.id.editText);
-        new_pass=(EditText)findViewById(R.id.editText2);
-        old_pass=(EditText)findViewById(R.id.editText3);
+        old_pass=(EditText)findViewById(R.id.editText2);
+        new_pass=(EditText)findViewById(R.id.editText3);
         submit1=(Button)findViewById(R.id.button);
 
         if (android.os.Build.VERSION.SDK_INT >= 21)
@@ -79,7 +79,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         String email_g =email.getText().toString();
         String newpassword = new_pass.getText().toString();
         String oldpassword=old_pass.getText().toString();
-
+       Log.d("pass",newpassword+" "+oldpassword);
         boolean cancel = false;
         View focusView = null;
 
@@ -161,6 +161,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                 Log.e("12345101010","456789");
                 return e.getMessage();
             }
+           // Log.e("123456",""+getOutputFromUrl(params[0]+mEmail+"&spassword="+mOldPassward+"&npassword="+mPassword));
             Log.e("123456789",params[0]+mEmail+"&spassword="+mOldPassward+"&npassword="+mPassword);
                 try
                 {

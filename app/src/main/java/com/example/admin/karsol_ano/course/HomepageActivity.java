@@ -25,6 +25,7 @@ import com.example.admin.karsol_ano.MenuItems.AboutUsActivity;
 import com.example.admin.karsol_ano.MenuItems.ChangePasswordActivity;
 import com.example.admin.karsol_ano.MenuItems.ContactUsActivity;
 import com.example.admin.karsol_ano.MenuItems.Developed_Activity;
+import com.example.admin.karsol_ano.MenuItems.ForgotPasswordActivity;
 import com.example.admin.karsol_ano.MenuItems.PriceActivity;
 import com.example.admin.karsol_ano.R;
 
@@ -38,7 +39,7 @@ public class HomepageActivity extends AppCompatActivity
 {
     private static ViewPager mPager;
     private static int currentPage = 0;
-    private static final Integer[] AARZU= {R.drawable.aarzu,R.drawable.basic,R.drawable.basic11,R.drawable.company_11,R.drawable.partnership_11};
+    private static final Integer[] AARZU= {R.drawable.one,R.drawable.two,R.drawable.third,R.drawable.four,R.drawable.five};
     private ArrayList<Integer> AARZUArray = new ArrayList<Integer>();
     LinearLayout basic, company, partnership;
     TextView tvbasic, tvcompany, tvpartnership;
@@ -157,6 +158,6 @@ public class HomepageActivity extends AppCompatActivity
             public void run() {
                 handler.post(Update);
             }
-        }, 2500, 2500);
+        }, 5000,5000);
     }
 }

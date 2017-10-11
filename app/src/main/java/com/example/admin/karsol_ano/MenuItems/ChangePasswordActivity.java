@@ -43,10 +43,10 @@ public class ChangePasswordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change2_password);
         email = (EditText) findViewById(R.id.editText);
-        new_pass = (EditText) findViewById(R.id.editText2);
-        old_pass = (EditText) findViewById(R.id.editText3);
-        submit1 = (Button) findViewById(R.id.button);
-
+        old_pass = (EditText) findViewById(R.id.editText2);
+        new_pass = (EditText) findViewById(R.id.editText3);
+        submit1 = (Button) findViewById(R.id.btnregister);
+        Log.d("hello","oncretae");
         if (android.os.Build.VERSION.SDK_INT >= 21) {
             Window statusBar = getWindow();
             statusBar.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -152,7 +152,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
         protected String doInBackground(String... params) {
             // TODO: attempt authentication against a network service.
 
-            try {
+            try {// mPassword
                 // Simulate network access.
                 Log.e("123456789", params[0] + mEmail + "&spassword=" + mOldPassward + "&npassword=" + mPassword);
 
@@ -232,7 +232,3 @@ public class ChangePasswordActivity extends AppCompatActivity {
 
 
 }
-
-
-
-

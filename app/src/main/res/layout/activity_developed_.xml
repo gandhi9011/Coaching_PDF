@@ -11,120 +11,209 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Developed by:" />
+        android:text="Developed by:"
+        android:textColor="@color/colorPrimaryDark"
+        android:textStyle="bold"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:weightSum="1">
 
-        <TextView
+        <LinearLayout android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Archives Soft Design(OPC) Pvt. Ltd."
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="GF 19, Neelnandan Complex" />
+            <TextView
+                android:id="@+id/archive"
+                android:layout_width="84dp"
+                android:layout_height="wrap_content"
+                android:text="Archives"
+                android:textColor="#065955"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:text="New VIP Road, Vadodara" />
-    </LinearLayout>
+            <TextView
+                android:id="@+id/soft"
+                android:layout_width="44dp"
+                android:layout_height="wrap_content"
+                android:text="Soft"
+                android:textColor="#B92126"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="15dp">
+            <TextView
+                android:id="@+id/design"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#383637"
+                android:text="Design(opc) Pvt. Ltd."
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_weight="0.82"
+            android:orientation="horizontal">
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingLeft="20dp"
-                android:text="Contact no:" />
+                android:layout_gravity="start"
+                android:drawableLeft="@drawable/locationblue" />
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="207dp"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingLeft="50dp">
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textView1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="GF 19, Neelnandan Complex" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="(+91) 932 790 4653"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="(+91) 704 394 0123"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:paddingLeft="20dp"
-                android:text="Email:" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingLeft="50dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="info@archivessoftdesign.in"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="yogesh777@gmail.com"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:paddingLeft="20dp"
-                android:text="Website:" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingLeft="50dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="http://www.archivessoftdesign.in"
-                    android:textStyle="bold" />
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center"
+                    android:text="New VIP Road, Vadodara" />
 
             </LinearLayout>
 
         </LinearLayout>
 
-    </ScrollView>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Contact no:"
+            android:textColor="@color/colorPrimaryDark"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:drawableLeft="@drawable/contactdetailsblue" />
+
+            <LinearLayout
+                android:layout_width="144dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.09"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="(+91) 932 790 4653" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center"
+                    android:text="(+91) 704 394 0123" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Email:"
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimaryDark"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:drawableLeft="@drawable/post" />
+
+            <LinearLayout
+                android:layout_width="207dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="info@archivessoftdesign.in" />
+
+                <TextView
+                    android:layout_width="172dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center"
+                    android:text="yogesh777@gmail.com" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Url"
+            android:textColor="@color/colorPrimaryDark"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:drawableLeft="@drawable/website" />
+
+            <LinearLayout
+                android:layout_width="207dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.15"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="http://www.archivessoftdesign.in" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
 
 </LinearLayout>

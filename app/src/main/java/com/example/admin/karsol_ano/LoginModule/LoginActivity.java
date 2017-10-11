@@ -13,6 +13,7 @@ import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -35,6 +36,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.balysv.materialripple.MaterialRippleLayout;
 import com.example.admin.karsol_ano.MenuItems.AboutUsActivity;
 import com.example.admin.karsol_ano.MenuItems.ContactUsActivity;
 import com.example.admin.karsol_ano.MenuItems.Developed_Activity;
@@ -79,17 +81,18 @@ public class LoginActivity extends AppCompatActivity {
     private UserLoginTask mAuthTask = null;
 
     // UI references.
-    private AutoCompleteTextView mEmailView;
+    private EditText mEmailView;
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
-
+     User user;
+    UserOperation operation;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
+         operation=new UserOperation(this);
 
         if(!isNetworkConnected())
         {
@@ -129,12 +132,21 @@ public class LoginActivity extends AppCompatActivity {
 
 
             // Set up the login form.
-            mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
+            mEmailView = (EditText) findViewById(R.id.email);
             mPasswordView = (EditText) findViewById(R.id.password);
+            user = operation.getUser();
+        if(user!=null){
+            mEmailView.setText(user.getEmail());
+            mPasswordView.setText(user.getPassword());
+        }
+        mEmailView.setHintTextColor(getResources().getColor(R.color.colorPrimary));
+
+        mPasswordView.setHintTextColor(getResources().getColor(R.color.colorPrimary));
+
             mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
                 @Override
                 public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                    if (id == R.id.login || id == EditorInfo.IME_NULL) {
+                    if (id == R.id.password || id == EditorInfo.IME_NULL) {
                         attemptLogin();
                         return true;
                     }
@@ -142,8 +154,8 @@ public class LoginActivity extends AppCompatActivity {
                 }
             });
 
-            Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
-            Button mEmailRegistrationButton = (Button) findViewById(R.id.email_registration_button);
+            MaterialRippleLayout mEmailSignInButton = (MaterialRippleLayout) findViewById(R.id.email_sign_in_button);
+        MaterialRippleLayout mEmailRegistrationButton = (MaterialRippleLayout) findViewById(R.id.email_registration_button);
             TextView mForgotpassword = (TextView) findViewById(R.id.mforgotpass);
             mEmailSignInButton.setOnClickListener(new OnClickListener() {
                 @Override
@@ -515,11 +527,10 @@ public class LoginActivity extends AppCompatActivity {
                Log.e("123456789", "" + output);
                if (output.trim().equals("success") && mx == 1) {
                    Log.e("123456789--in if", "" + output);
-                   SharedPreferences sp=getSharedPreferences("Login", MODE_PRIVATE);
-                   SharedPreferences.Editor Ed=sp.edit();
-                   Ed.putString("Unm",mEmail );
-                   Ed.putString("Psw",mPassword);
-                   Ed.commit();
+                   user = new User();
+                   user.setEmail(mEmailView.getText().toString());
+                   user.setPassword(mPasswordView.getText().toString());
+                   String x = operation.Change(user);
                    Intent login = new Intent(LoginActivity.this, HomepageActivity.class);
                    startActivity(login);
 
@@ -576,9 +587,9 @@ public class LoginActivity extends AppCompatActivity {
                    if (mx == 1 && output.trim().equals("error")) {
                        Toast.makeText(LoginActivity.this, "login error", Toast.LENGTH_LONG).show();
                    } else if (mx == 1 && output.trim().equals("logout")) {
-                       Toast.makeText(LoginActivity.this, "Fail", Toast.LENGTH_LONG).show();
-                       mPasswordView.setError(getString(R.string.error_incorrect_password));
-                       mPasswordView.requestFocus();
+                       Toast.makeText(LoginActivity.this, "invalid email or password", Toast.LENGTH_LONG).show();
+                      // mPasswordView.setError(getString(R.string.error_incorrect_password));
+                      // mPasswordView.requestFocus();
                    }
 
                }

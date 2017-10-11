@@ -20,8 +20,8 @@
         android:orderInCategory="100"
         app:showAsAction="never" />
     <item
-        android:id="@+id/action_developer"
-        android:title="@string/action_developer"
+        android:id="@+id/action_pricing"
+        android:title="Pricing"
         android:orderInCategory="100"
         app:showAsAction="never" />
     <item
@@ -30,10 +30,11 @@
         android:orderInCategory="100"
         app:showAsAction="never" />
     <item
-        android:id="@+id/action_pricing"
-        android:title="Pricing"
+        android:id="@+id/action_developer"
+        android:title="@string/action_developer"
         android:orderInCategory="100"
         app:showAsAction="never" />
+
     <item
         android:id="@+id/action_signout"
         android:title="@string/action_sign_out"

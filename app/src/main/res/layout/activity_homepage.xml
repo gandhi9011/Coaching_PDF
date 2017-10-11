@@ -5,7 +5,13 @@
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
     android:orientation="vertical"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
 
+    android:paddingBottom="8dp"
+    android:paddingTop="8dp"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp"
     tools:context="com.example.admin.karsol_ano.LoginModule.LoginActivity"
     android:weightSum="1">
 
@@ -15,7 +21,9 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="fill_parent"
         android:layout_height="229dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+
+        >
 
         <RelativeLayout
             android:layout_width="fill_parent"
@@ -38,7 +46,17 @@
 
     <!--Slider-->
 
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="20dp"
+            android:text="Welcome to Aarzu Compact Accounts here you will find number of new styles of learning the Accounts..."/>
+        </LinearLayout>
     <LinearLayout
         android:id="@+id/basic"
         android:layout_width="match_parent"
@@ -62,7 +80,7 @@
             android:layout_marginTop="10dp"
             android:layout_weight="0.77"
             android:text="BASIC"
-            android:textColor="@color/appbar"
+            android:textColor="#6495ed"
             android:textSize="24sp"
             android:textStyle="bold|italic"
             android:visibility="visible" />
@@ -89,7 +107,7 @@
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="10dp"
                 android:layout_weight="0.77"
-                android:textColor="@color/appbar"
+                android:textColor="#ffd700"
                 android:textSize="24sp"
                 android:textStyle="bold|italic"
                 android:visibility="visible"
@@ -117,7 +135,7 @@
                     android:layout_marginLeft="30dp"
                     android:layout_marginTop="10dp"
                     android:layout_weight="0.77"
-                    android:textColor="@color/appbar"
+                    android:textColor="#556b2f"
                     android:textSize="24sp"
                     android:textStyle="bold|italic"
                     android:visibility="visible"
