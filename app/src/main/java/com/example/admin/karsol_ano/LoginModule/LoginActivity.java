@@ -6,14 +6,12 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -30,8 +28,6 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
-import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -568,23 +564,43 @@ public class LoginActivity extends AppCompatActivity {
                    alertDialogBuilder.setTitle("Your Password");
 
                    // set dialog message
-                   alertDialogBuilder
-                           .setMessage(output)
-                           .setCancelable(false)
-                           .setPositiveButton("Login", new DialogInterface.OnClickListener() {
-                               public void onClick(DialogInterface dialog, int id) {
-                                   // if this button is clicked, close
-                                   // current activity
-                                   dialog.dismiss();
-                               }
-                           });
+                   if(output.equals("error"))
+                   {
+                       alertDialogBuilder
+                               .setMessage("Email is not registered.")
+                               .setCancelable(false)
+                               .setPositiveButton("Register", new DialogInterface.OnClickListener() {
+                                   public void onClick(DialogInterface dialog, int id) {
+                                       // if this button is clicked, close
+                                       // current activity
+                                       dialog.dismiss();
+                                   }
+                               });
+                   }
+                   else
+                   {
+                       alertDialogBuilder
+                               .setMessage(output)
+                               .setCancelable(false)
+                               .setPositiveButton("Login", new DialogInterface.OnClickListener() {
+                                   public void onClick(DialogInterface dialog, int id) {
+                                       // if this button is clicked, close
+                                       // current activity
+                                       dialog.dismiss();
+                                   }
+                               });
+                   }
                    // create alert dialog
                    AlertDialog alertDialog = alertDialogBuilder.create();
 
                    // show it
                    alertDialog.show();
-               } else {
-                   if (mx == 1 && output.trim().equals("error")) {
+               }
+               else
+
+                   {
+                   if (mx == 1 && output.trim().equals("error"))
+                   {
                        Toast.makeText(LoginActivity.this, "login error", Toast.LENGTH_LONG).show();
                    } else if (mx == 1 && output.trim().equals("logout")) {
                        Toast.makeText(LoginActivity.this, "invalid email or password", Toast.LENGTH_LONG).show();
