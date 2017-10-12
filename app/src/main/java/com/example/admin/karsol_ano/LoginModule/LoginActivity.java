@@ -595,12 +595,8 @@ public class LoginActivity extends AppCompatActivity {
 
                    // show it
                    alertDialog.show();
-               }
-               else
-
-                   {
-                   if (mx == 1 && output.trim().equals("error"))
-                   {
+               } else {
+                   if (mx == 1 && output.trim().equals("error")) {
                        Toast.makeText(LoginActivity.this, "login error", Toast.LENGTH_LONG).show();
                    } else if (mx == 1 && output.trim().equals("logout")) {
                        Toast.makeText(LoginActivity.this, "invalid email or password", Toast.LENGTH_LONG).show();

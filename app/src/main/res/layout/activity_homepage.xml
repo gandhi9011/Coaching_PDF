@@ -20,10 +20,10 @@
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="fill_parent"
-        android:layout_height="229dp"
+        android:layout_height="170dp"
         android:orientation="vertical"
 
-        >
+        android:layout_weight="0.24">
 
         <RelativeLayout
             android:layout_width="fill_parent"
@@ -57,6 +57,7 @@
             android:textSize="20dp"
             android:text="Welcome to Aarzu Compact Accounts here you will find number of new styles of learning the Accounts..."/>
         </LinearLayout>
+
     <LinearLayout
         android:id="@+id/basic"
         android:layout_width="match_parent"
