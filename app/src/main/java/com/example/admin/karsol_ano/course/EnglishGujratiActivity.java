@@ -22,14 +22,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.example.admin.karsol_ano.MenuItems.ChangePasswordActivity;
+
 import com.example.admin.karsol_ano.LoginModule.LoginActivity;
 import com.example.admin.karsol_ano.MenuItems.AboutUsActivity;
+import com.example.admin.karsol_ano.MenuItems.ChangePasswordActivity;
 import com.example.admin.karsol_ano.MenuItems.ContactUsActivity;
 import com.example.admin.karsol_ano.MenuItems.Developed_Activity;
-import com.example.admin.karsol_ano.MenuItems.ForgotPasswordActivity;
 import com.example.admin.karsol_ano.MenuItems.PriceActivity;
-import com.example.admin.karsol_ano.PdfrenderActivity;
+import com.example.admin.karsol_ano.PdfViewActivity;
 import com.example.admin.karsol_ano.R;
 
 import org.apache.http.HttpEntity;
@@ -233,8 +233,8 @@ public class EnglishGujratiActivity extends AppCompatActivity {
                 Toast.makeText(EnglishGujratiActivity.this, "PDF Coming Soon", Toast.LENGTH_LONG).show();
 
             } else {
-                //Toast.makeText(EnglishGujratiActivity.this,output,Toast.LENGTH_LONG).show();
-                Intent pdfview = new Intent(EnglishGujratiActivity.this, PdfrenderActivity.class);
+              //  Toast.makeText(EnglishGujratiActivity.this,output+"1111111111111111",Toast.LENGTH_LONG).show();
+                Intent pdfview = new Intent(EnglishGujratiActivity.this, PdfViewActivity.class);
                 pdfview.putExtra("Link", output.trim());
                 startActivity(pdfview);
             }

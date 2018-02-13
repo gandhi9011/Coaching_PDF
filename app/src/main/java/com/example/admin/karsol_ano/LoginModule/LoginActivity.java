@@ -561,11 +561,12 @@ public class LoginActivity extends AppCompatActivity {
                    final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(LoginActivity.this);
 
                    // set title
-                   alertDialogBuilder.setTitle("Your Password");
+
 
                    // set dialog message
-                   if(output.equals("error"))
+                   if(output.trim().equals("error"))
                    {
+                       alertDialogBuilder.setTitle("Error");
                        alertDialogBuilder
                                .setMessage("Email is not registered.")
                                .setCancelable(false)
@@ -579,6 +580,7 @@ public class LoginActivity extends AppCompatActivity {
                    }
                    else
                    {
+                       alertDialogBuilder.setTitle("Your Password");
                        alertDialogBuilder
                                .setMessage(output)
                                .setCancelable(false)
